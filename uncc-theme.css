@@ -1,0 +1,313 @@
+/* UNC Charlotte AsciiDoctor HTML Theme
+   Based on official UNC Charlotte Brand Guidelines
+   https://brand.charlotte.edu/ */
+
+:root {
+  --charlotte-green: #005035;
+  --niner-gold: #A49665;
+  --pine-green: #899064;
+  --clay-red: #802f2d;
+  --sky-blue: #007377;
+  --stone-gray: #717C7D;
+  --warm-gray: #696158;
+  --light-gray: #e6e8e9;
+  --niner-green-dark: #00351C;
+  --metallic-gold: #ac9751;
+  --jasper: #f1e6b2;
+}
+
+body {
+  font-family: 'Calluna', Georgia, 'Times New Roman', serif;
+  font-size: 11pt;
+  line-height: 1.4;
+  color: #333333;
+  background-color: #FFFFFF;
+  max-width: 8.5in;
+  margin: 0 auto;
+  padding: 0.5in;
+}
+
+/* Links */
+a {
+  color: var(--charlotte-green);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Code spans */
+code {
+  font-size: 10pt;
+  color: var(--charlotte-green);
+  background-color: var(--light-gray);
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Interstate', Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  line-height: 1.4;
+  color: var(--charlotte-green);
+}
+
+h1 {
+  font-size: 24pt;
+  margin-top: 24pt;
+  margin-bottom: 14pt;
+}
+
+h2 {
+  font-size: 18pt;
+  margin-top: 20pt;
+  margin-bottom: 10pt;
+  border-bottom: 2px solid var(--niner-gold);
+  padding-bottom: 6pt;
+}
+
+h3 {
+  font-size: 14pt;
+  color: var(--niner-green-dark);
+  margin-top: 16pt;
+  margin-bottom: 8pt;
+}
+
+h4 {
+  font-size: 12pt;
+  color: var(--stone-gray);
+  margin-top: 14pt;
+  margin-bottom: 6pt;
+}
+
+/* Title/Header */
+#header {
+  text-align: center;
+  margin-bottom: 2em;
+}
+
+#header h1 {
+  font-size: 32pt;
+  color: var(--charlotte-green);
+  line-height: 1.2;
+  border-bottom: none;
+}
+
+#header .details {
+  font-size: 14pt;
+  color: var(--warm-gray);
+  margin-top: 20pt;
+}
+
+/* Tables */
+table {
+  font-family: 'Calluna', Georgia, 'Times New Roman', serif;
+  font-size: 10pt;
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1em 0;
+}
+
+table, th, td {
+  border: 0.5pt solid #CCCCCC;
+}
+
+th, td {
+  padding: 6pt 8pt;
+}
+
+thead th {
+  font-family: 'Interstate', Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 10pt;
+  line-height: 1.4;
+  color: #FFFFFF;
+  background-color: var(--charlotte-green);
+  padding: 8pt;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+tbody tr:nth-child(even) {
+  background-color: var(--jasper);
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #FFFFFF;
+}
+
+tfoot td {
+  font-weight: bold;
+  background-color: var(--light-gray);
+}
+
+/* Captions */
+.title, caption {
+  font-family: 'Interstate', Arial, Helvetica, sans-serif;
+  font-size: 10pt;
+  font-style: italic;
+  color: var(--stone-gray);
+  text-align: left;
+  margin-bottom: 6pt;
+}
+
+/* Lists */
+ul, ol {
+  margin-top: 4pt;
+  margin-bottom: 4pt;
+}
+
+ul li, ol li {
+  margin-bottom: 6pt;
+}
+
+ul li::marker {
+  color: var(--charlotte-green);
+  font-size: 9pt;
+}
+
+ol li::marker {
+  color: var(--charlotte-green);
+  font-size: 11pt;
+}
+
+/* Description lists */
+dl dt {
+  font-family: 'Interstate', Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color: var(--charlotte-green);
+  margin-top: 4pt;
+}
+
+dl dd {
+  margin-left: 18pt;
+}
+
+/* Prose/paragraphs */
+p {
+  margin-bottom: 12pt;
+}
+
+/* Admonitions */
+.admonitionblock {
+  font-size: 10pt;
+  border: 0.5pt solid var(--charlotte-green);
+  background-color: #FFFFFF;
+  padding: 8pt 12pt;
+  margin: 1em 0;
+}
+
+.admonitionblock td.icon {
+  font-family: 'Interstate', Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color: var(--charlotte-green);
+  padding-right: 12pt;
+  vertical-align: top;
+}
+
+.admonitionblock.note td.icon::before { content: "NOTE"; }
+.admonitionblock.tip td.icon::before { content: "TIP"; color: var(--pine-green); }
+.admonitionblock.warning td.icon::before { content: "WARNING"; color: var(--niner-gold); }
+.admonitionblock.caution td.icon::before { content: "CAUTION"; color: var(--clay-red); }
+.admonitionblock.important td.icon::before { content: "IMPORTANT"; color: var(--sky-blue); }
+
+/* Sidebar */
+.sidebarblock {
+  background-color: var(--jasper);
+  border: 1pt solid var(--niner-gold);
+  border-radius: 4pt;
+  padding: 10pt 12pt;
+  margin: 1em 0;
+}
+
+.sidebarblock .title {
+  font-family: 'Interstate', Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color: var(--charlotte-green);
+  font-size: 12pt;
+  font-style: normal;
+}
+
+/* Blockquotes */
+blockquote, .quoteblock {
+  font-size: 11pt;
+  font-style: italic;
+  color: var(--warm-gray);
+  border-left: 3pt solid var(--niner-gold);
+  padding-left: 14pt;
+  margin: 1em 0;
+}
+
+.quoteblock .attribution {
+  font-size: 10pt;
+  color: var(--stone-gray);
+  font-style: normal;
+}
+
+/* Abstract */
+.abstract {
+  font-size: 11pt;
+  font-style: italic;
+  color: var(--warm-gray);
+}
+
+.abstract .title {
+  font-family: 'Interstate', Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color: var(--charlotte-green);
+  font-style: normal;
+}
+
+/* TOC */
+#toc {
+  font-family: 'Interstate', Arial, Helvetica, sans-serif;
+  font-size: 11pt;
+  line-height: 1.6;
+}
+
+#toc a {
+  color: inherit;
+}
+
+#toc ul {
+  list-style-type: none;
+  padding-left: 15pt;
+}
+
+#toc > ul {
+  padding-left: 0;
+}
+
+#toc .sectlevel1 > li > a {
+  font-weight: bold;
+  color: var(--charlotte-green);
+}
+
+/* Code blocks */
+pre {
+  background-color: var(--light-gray);
+  padding: 12pt;
+  border-radius: 4pt;
+  overflow-x: auto;
+  font-size: 10pt;
+}
+
+pre code {
+  background-color: transparent;
+  padding: 0;
+}
+
+/* Footer styling for print */
+@media print {
+  body {
+    max-width: none;
+    padding: 0;
+  }
+
+  @page {
+    margin: 0.5in;
+    size: letter;
+  }
+}
