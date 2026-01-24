@@ -2,7 +2,14 @@
    Based on official UNC Charlotte Brand Guidelines
    https://brand.charlotte.edu/ */
 
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400;1,8..60,600&family=Source+Code+Pro:wght@400;500&display=swap');
+
 :root {
+  /* Font families */
+  --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Source Sans 3', Arial, Helvetica, sans-serif;
+  --font-mono: 'Source Code Pro', 'Courier New', monospace;
   --charlotte-green: #005035;
   --niner-gold: #A49665;
   --pine-green: #899064;
@@ -17,14 +24,102 @@
 }
 
 body {
-  font-family: 'Calluna', Georgia, 'Times New Roman', serif;
+  font-family: var(--font-serif);
   font-size: 11pt;
   line-height: 1.4;
   color: #333333;
   background-color: #FFFFFF;
-  max-width: 8.5in;
+  margin: 0;
+  padding: 0;
+}
+
+/* Sidebar TOC Layout */
+body.toc2 {
+  padding-left: 280px;
+}
+
+body.toc2 #toc {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 260px;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: var(--charlotte-green);
+  padding: 20px;
+  box-sizing: border-box;
+  z-index: 1000;
+  border-right: 3px solid var(--niner-gold);
+}
+
+body.toc2 #toc #toctitle {
+  color: #FFFFFF;
+  font-size: 14pt;
+  font-weight: bold;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--niner-gold);
+}
+
+body.toc2 #toc a {
+  color: rgba(255, 255, 255, 0.85);
+  display: block;
+  padding: 6px 0;
+  transition: color 0.2s, padding-left 0.2s;
+}
+
+body.toc2 #toc a:hover {
+  color: var(--niner-gold);
+  text-decoration: none;
+  padding-left: 5px;
+}
+
+body.toc2 #toc ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+body.toc2 #toc .sectlevel1 > li {
+  margin-bottom: 8px;
+}
+
+body.toc2 #toc .sectlevel1 > li > a {
+  font-weight: bold;
+  color: #FFFFFF;
+  font-size: 11pt;
+}
+
+body.toc2 #toc .sectlevel2 {
+  padding-left: 14px;
+  border-left: 1px solid var(--niner-gold);
+  margin-left: 6px;
+  margin-top: 4px;
+}
+
+body.toc2 #toc .sectlevel2 > li > a {
+  font-size: 10pt;
+  font-weight: normal;
+}
+
+body.toc2 #toc .sectlevel3 {
+  padding-left: 12px;
+  margin-top: 2px;
+}
+
+body.toc2 #toc .sectlevel3 > li > a {
+  font-size: 9pt;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+body.toc2 #header,
+body.toc2 #content,
+body.toc2 #footnotes,
+body.toc2 #footer {
+  max-width: 900px;
   margin: 0 auto;
-  padding: 0.5in;
+  padding: 30px 40px;
 }
 
 /* Links */
@@ -48,7 +143,7 @@ code {
 
 /* Headings */
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Interstate', Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
   font-weight: bold;
   line-height: 1.4;
   color: var(--charlotte-green);
@@ -103,7 +198,7 @@ h4 {
 
 /* Tables */
 table {
-  font-family: 'Calluna', Georgia, 'Times New Roman', serif;
+  font-family: var(--font-serif);
   font-size: 10pt;
   border-collapse: collapse;
   width: 100%;
@@ -119,7 +214,7 @@ th, td {
 }
 
 thead th {
-  font-family: 'Interstate', Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
   font-weight: bold;
   font-size: 10pt;
   line-height: 1.4;
@@ -145,7 +240,7 @@ tfoot td {
 
 /* Captions */
 .title, caption {
-  font-family: 'Interstate', Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
   font-size: 10pt;
   font-style: italic;
   color: var(--stone-gray);
@@ -175,7 +270,7 @@ ol li::marker {
 
 /* Description lists */
 dl dt {
-  font-family: 'Interstate', Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
   font-weight: bold;
   color: var(--charlotte-green);
   margin-top: 4pt;
@@ -200,7 +295,7 @@ p {
 }
 
 .admonitionblock td.icon {
-  font-family: 'Interstate', Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
   font-weight: bold;
   color: var(--charlotte-green);
   padding-right: 12pt;
@@ -223,7 +318,7 @@ p {
 }
 
 .sidebarblock .title {
-  font-family: 'Interstate', Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
   font-weight: bold;
   color: var(--charlotte-green);
   font-size: 12pt;
@@ -254,15 +349,15 @@ blockquote, .quoteblock {
 }
 
 .abstract .title {
-  font-family: 'Interstate', Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
   font-weight: bold;
   color: var(--charlotte-green);
   font-style: normal;
 }
 
-/* TOC */
+/* TOC Base */
 #toc {
-  font-family: 'Interstate', Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
   font-size: 11pt;
   line-height: 1.6;
 }
@@ -285,7 +380,29 @@ blockquote, .quoteblock {
   color: var(--charlotte-green);
 }
 
+/* Scrollbar styling for sidebar */
+body.toc2 #toc::-webkit-scrollbar {
+  width: 6px;
+}
+
+body.toc2 #toc::-webkit-scrollbar-track {
+  background: var(--niner-green-dark);
+}
+
+body.toc2 #toc::-webkit-scrollbar-thumb {
+  background: var(--niner-gold);
+  border-radius: 3px;
+}
+
+body.toc2 #toc::-webkit-scrollbar-thumb:hover {
+  background: var(--metallic-gold);
+}
+
 /* Code blocks */
+pre, code {
+  font-family: var(--font-mono);
+}
+
 pre {
   background-color: var(--light-gray);
   padding: 12pt;
@@ -299,11 +416,53 @@ pre code {
   padding: 0;
 }
 
+/* Responsive - collapse sidebar on small screens */
+@media screen and (max-width: 800px) {
+  body.toc2 {
+    padding-left: 0;
+  }
+
+  body.toc2 #toc {
+    position: relative;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    border-right: none;
+    border-bottom: 3px solid var(--niner-gold);
+  }
+
+  body.toc2 #header,
+  body.toc2 #content,
+  body.toc2 #footnotes,
+  body.toc2 #footer {
+    padding: 20px;
+  }
+}
+
 /* Footer styling for print */
 @media print {
-  body {
+  body, body.toc2 {
     max-width: none;
     padding: 0;
+    padding-left: 0;
+  }
+
+  body.toc2 #toc {
+    position: relative;
+    width: auto;
+    height: auto;
+    background-color: var(--light-gray);
+    color: #333333;
+    border: 1px solid var(--charlotte-green);
+    page-break-after: always;
+  }
+
+  body.toc2 #toc #toctitle {
+    color: var(--charlotte-green);
+  }
+
+  body.toc2 #toc a {
+    color: var(--charlotte-green);
   }
 
   @page {
