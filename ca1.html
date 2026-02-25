@@ -4,1278 +4,991 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.26">
-<title>Lab 2: Distributed Computing for Data Processing</title>
-<style>
-/* ============================================================
-   UNC Charlotte Course HTML Theme
-   Maps uncc-course-pdf-theme.yml tokens to Asciidoctor HTML5
-   ============================================================ */
-
-/* --- Design Tokens (CSS Custom Properties) --- */
-:root {
-  /* Base */
-  --base-font-color: #101820;
-  --base-font-size: 16px;
-  --base-line-height: 1.6;
-  --link-color: #005035;
-  --link-hover-color: #003d28;
-
-  /* Headings */
-  --heading-color: #00563F;
-  --heading-line-height: 1.3;
-  --h1-font-size: 1.75rem;
-  --h2-font-size: 1.35rem;
-  --h3-font-size: 1.15rem;
-  --h4-font-size: 1rem;
-
-  /* Inline code */
-  --codespan-color: #2D4A3E;
-  --codespan-bg: #F0F3F2;
-  --codespan-border: #D2D8D5;
-
-  /* Code blocks */
-  --code-bg: #F3F5F5;
-  --code-border: #D2D8D5;
-  --code-font-size: 0.875rem;
-
-  /* Tables */
-  --table-border: #C8CFC9;
-  --table-head-bg: #005035;
-  --table-head-color: #FFFFFF;
-  --table-stripe-bg: #F8FAF9;
-
-  /* Ordered list markers */
-  --olist-marker-color: #005035;
-
-  /* TOC */
-  --toc-dot-color: #8A9A97;
-
-  /* Footer (print) */
-  --footer-color: #8A9A97;
-  --footer-border: #C8CFC9;
-
-  /* Admonition — Note */
-  --adm-note-bg: #E8F2EE;
-  --adm-note-border: #7AA593;
-  --adm-note-icon-color: #005035;
-  --adm-note-label-color: #00563F;
-
-  /* Admonition — Tip */
-  --adm-tip-bg: #E5F2F2;
-  --adm-tip-border: #5F9A9D;
-  --adm-tip-icon-color: #005B5E;
-  --adm-tip-label-color: #005B5E;
-
-  /* Admonition — Caution */
-  --adm-caution-bg: #F1E6B2;
-  --adm-caution-border: #A49665;
-  --adm-caution-icon-color: #5E532E;
-  --adm-caution-label-color: #5E532E;
-
-  /* Admonition — Warning */
-  --adm-warning-bg: #F2E7DA;
-  --adm-warning-border: #B9975B;
-  --adm-warning-icon-color: #654321;
-  --adm-warning-label-color: #654321;
-
-  /* Admonition — Important */
-  --adm-important-bg: #E4F1EC;
-  --adm-important-border: #00856A;
-  --adm-important-icon-color: #005845;
-  --adm-important-label-color: #005845;
-
-  /* Admonition — Artifact role (purple) */
-  --adm-artifact-bg: #EEE7F7;
-  --adm-artifact-border: #71509B;
-  --adm-artifact-icon-color: #4B2F75;
-  --adm-artifact-label-color: #4B2F75;
-
-  /* Cover page roles */
-  --cover-kicker-size: 0.85rem;
-  --cover-kicker-color: #005B5E;
-  --cover-lab-size: 2.25rem;
-  --cover-lab-color: #005035;
-  --cover-subtitle-size: 1.4rem;
-  --cover-subtitle-color: #101820;
-  --cover-services-size: 0.8rem;
-  --cover-services-color: #30454F;
-  --cover-dates-size: 0.8rem;
-  --cover-dates-color: #005B5E;
-  --cover-term-size: 1.1rem;
-  --cover-term-color: #005035;
-  --cover-location-size: 0.8rem;
-  --cover-location-color: #30454F;
-  --cover-instructor-size: 0.9rem;
-  --cover-instructor-color: #005035;
-
-  /* Font stacks */
-  --body-font: "Calluna", "Georgia", "Noto Serif", serif;
-  --heading-font: "Interstate", "Helvetica Neue", "Arial", sans-serif;
-  --mono-font: "IBM Plex Mono", "SFMono-Regular", "Consolas", "Liberation Mono", monospace;
-}
-
-/* --- @font-face: brand fonts (degrade gracefully if absent) --- */
-@font-face {
-  font-family: "Calluna";
-  src: url("fonts/Calluna-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Calluna";
-  src: url("fonts/Calluna-Bold.ttf") format("truetype");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Calluna";
-  src: url("fonts/Calluna-Italic.ttf") format("truetype");
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Calluna";
-  src: url("fonts/Calluna-BoldItalic.ttf") format("truetype");
-  font-weight: 700;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Interstate";
-  src: url("fonts/Interstate-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Interstate";
-  src: url("fonts/Interstate-Bold.ttf") format("truetype");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "IBM Plex Mono";
-  src: url("fonts/IBMPlexMono-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "IBM Plex Mono";
-  src: url("fonts/IBMPlexMono-Bold.ttf") format("truetype");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "IBM Plex Mono";
-  src: url("fonts/IBMPlexMono-Italic.ttf") format("truetype");
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-@font-face {
-  font-family: "IBM Plex Mono";
-  src: url("fonts/IBMPlexMono-BoldItalic.ttf") format("truetype");
-  font-weight: 700;
-  font-style: italic;
-  font-display: swap;
-}
-
-/* --- Reset & Base Typography --- */
-html {
-  font-size: var(--base-font-size);
-  -webkit-text-size-adjust: 100%;
-}
-
-body {
-  font-family: var(--body-font);
-  color: var(--base-font-color);
-  line-height: var(--base-line-height);
-  background: #fff;
-  margin: 0;
-  padding: 0;
-  text-align: left;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-}
-
-/* --- Layout --- */
-#header, #content, #footnotes, #footer {
-  max-width: 52em;
-  margin: 0 auto;
-  padding: 0 1.25em;
-}
-
-#content {
-  margin-top: 1em;
-  margin-bottom: 1.5em;
-}
-
-/* --- Links --- */
-a {
-  color: var(--link-color);
-  text-decoration: underline;
-}
-a:hover, a:focus {
-  color: var(--link-hover-color);
-}
-
-/* --- Headings --- */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--heading-font);
-  color: var(--heading-color);
-  font-weight: 700;
-  line-height: var(--heading-line-height);
-  margin-top: 1em;
-  margin-bottom: 0.6em;
-  text-rendering: optimizeLegibility;
-}
-
-h1 { font-size: var(--h1-font-size); }
-h2 { font-size: var(--h2-font-size); margin-top: 1.6em; }
-h3 { font-size: var(--h3-font-size); margin-top: 1.2em; }
-h4 { font-size: var(--h4-font-size); }
-
-/* Section dividers */
-.sect1 + .sect1 {
-  border-top: 1px solid #e7e7e9;
-  padding-top: 0.5em;
-}
-
-/* --- Paragraphs --- */
-p {
-  margin: 0 0 0.75em;
-  line-height: var(--base-line-height);
-}
-
-/* --- Inline Code --- */
-:not(pre):not([class^="L"]) > code {
-  font-family: var(--mono-font);
-  font-size: 0.9em;
-  color: var(--codespan-color);
-  background: var(--codespan-bg);
-  border: 0.4px solid var(--codespan-border);
-  border-radius: 2px;
-  padding: 0.15em 0.4em;
-  word-spacing: -0.15em;
-}
-
-/* --- Code Blocks --- */
-.listingblock pre,
-.literalblock pre {
-  font-family: var(--mono-font);
-  font-size: var(--code-font-size);
-  line-height: 1.4;
-  background: var(--code-bg);
-  border: 0.6px solid var(--code-border);
-  border-radius: 2px;
-  padding: 0.75em 1em;
-  overflow-x: auto;
-  color: var(--base-font-color);
-}
-
-.listingblock pre code,
-.literalblock pre code {
-  font-family: inherit;
-  font-size: inherit;
-  background: none;
-  border: none;
-  padding: 0;
-  color: inherit;
-}
-
-/* --- Tables --- */
-table.tableblock {
-  width: 100%;
-  border-collapse: collapse;
-  border: 0.5px solid var(--table-border);
-  margin-bottom: 1.25em;
-}
-
-table.tableblock thead th {
-  background: var(--table-head-bg);
-  color: var(--table-head-color);
-  font-weight: 700;
-  padding: 0.5em 0.625em;
-  text-align: left;
-  border: 0.5px solid var(--table-border);
-}
-
-table.tableblock td {
-  padding: 0.5em 0.625em;
-  border: 0.5px solid var(--table-border);
-  vertical-align: top;
-}
-
-table.tableblock tr:nth-child(even) {
-  background: var(--table-stripe-bg);
-}
-
-table.tableblock p.tableblock {
-  margin: 0;
-}
-
-/* --- Ordered Lists (task steps) --- */
-.olist.arabic ol {
-  counter-reset: none;
-  padding-left: 1.5em;
-}
-
-.olist.arabic ol > li {
-  margin-bottom: 0.4em;
-  line-height: var(--base-line-height);
-}
-
-.olist.arabic ol > li::marker {
-  color: var(--olist-marker-color);
-  font-weight: 700;
-  font-size: 1.1em;
-}
-
-/* Unordered lists */
-.ulist ul {
-  padding-left: 1.5em;
-  margin-bottom: 1em;
-}
-.ulist ul > li {
-  margin-bottom: 0.3em;
-}
-
-/* --- TOC --- */
-#toc {
-  border: 1px solid #e0e0dc;
-  background: #f8f8f7;
-  border-radius: 4px;
-  padding: 1em 1.25em;
-  margin-bottom: 1.5em;
-}
-
-#toctitle {
-  font-family: var(--heading-font);
-  font-size: 1.25rem;
-  color: var(--heading-color);
-  font-weight: 700;
-  margin-top: 0;
-  margin-bottom: 0.6em;
-}
-
-#toc ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-#toc ul ul {
-  padding-left: 1em;
-}
-
-#toc li {
-  line-height: 1.35;
-  margin-top: 0.35em;
-}
-
-#toc a {
-  text-decoration: none;
-  color: var(--base-font-color);
-}
-#toc a:hover {
-  color: var(--link-color);
-  text-decoration: underline;
-}
-
-/* --- Admonition Blocks (shared base) --- */
-.admonitionblock > table {
-  border-collapse: separate;
-  border: none;
-  background: none;
-  width: 100%;
-  border-radius: 2px;
-  overflow: hidden;
-  margin-bottom: 1.25em;
-}
-
-.admonitionblock > table td.icon {
-  text-align: center;
-  width: 60px;
-  vertical-align: top;
-  padding: 0.75em 0.5em;
-}
-
-.admonitionblock > table td.icon .title {
-  font-family: var(--heading-font);
-  font-weight: 700;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  margin-top: 0.3em;
-}
-
-.admonitionblock > table td.icon [class^="fa icon-"] {
-  font-size: 1.8em;
-  text-shadow: none;
-}
-
-/* Font Awesome icon mappings (matches PDF theme icons) */
-.admonitionblock td.icon .icon-note::before {
-  content: "\f05a"; /* fa-info-circle */
-}
-.admonitionblock td.icon .icon-tip::before {
-  content: "\f144"; /* fa-play-circle */
-}
-.admonitionblock td.icon .icon-caution::before {
-  content: "\f071"; /* fa-exclamation-triangle */
-}
-.admonitionblock td.icon .icon-warning::before {
-  content: "\f06a"; /* fa-exclamation-circle */
-}
-.admonitionblock td.icon .icon-important::before {
-  content: "\f0f3"; /* fa-bell */
-}
-
-.admonitionblock > table td.content {
-  padding: 0.75em 1em 0.75em 0.75em;
-  border-left: 2px solid;
-  color: var(--base-font-color);
-}
-
-.admonitionblock > table td.content > :last-child > :last-child {
-  margin-bottom: 0;
-}
-
-/* --- Admonition: Note --- */
-.admonitionblock.note > table {
-  background: var(--adm-note-bg);
-}
-.admonitionblock.note > table td.content {
-  border-left-color: var(--adm-note-border);
-}
-.admonitionblock.note td.icon .title {
-  color: var(--adm-note-label-color);
-}
-.admonitionblock.note td.icon [class^="fa icon-"] {
-  color: var(--adm-note-icon-color);
-}
-
-/* --- Admonition: Tip --- */
-.admonitionblock.tip > table {
-  background: var(--adm-tip-bg);
-}
-.admonitionblock.tip > table td.content {
-  border-left-color: var(--adm-tip-border);
-}
-.admonitionblock.tip td.icon .title {
-  color: var(--adm-tip-label-color);
-}
-.admonitionblock.tip td.icon [class^="fa icon-"] {
-  color: var(--adm-tip-icon-color);
-  text-shadow: none;
-}
-
-/* --- Admonition: Caution --- */
-.admonitionblock.caution > table {
-  background: var(--adm-caution-bg);
-}
-.admonitionblock.caution > table td.content {
-  border-left-color: var(--adm-caution-border);
-}
-.admonitionblock.caution td.icon .title {
-  color: var(--adm-caution-label-color);
-}
-.admonitionblock.caution td.icon [class^="fa icon-"] {
-  color: var(--adm-caution-icon-color);
-}
-
-/* --- Admonition: Warning --- */
-.admonitionblock.warning > table {
-  background: var(--adm-warning-bg);
-}
-.admonitionblock.warning > table td.content {
-  border-left-color: var(--adm-warning-border);
-}
-.admonitionblock.warning td.icon .title {
-  color: var(--adm-warning-label-color);
-}
-.admonitionblock.warning td.icon [class^="fa icon-"] {
-  color: var(--adm-warning-icon-color);
-}
-
-/* --- Admonition: Important --- */
-.admonitionblock.important > table {
-  background: var(--adm-important-bg);
-}
-.admonitionblock.important > table td.content {
-  border-left-color: var(--adm-important-border);
-}
-.admonitionblock.important td.icon .title {
-  color: var(--adm-important-label-color);
-}
-.admonitionblock.important td.icon [class^="fa icon-"] {
-  color: var(--adm-important-icon-color);
-}
-
-/* --- Admonition: Artifact role (purple override) --- */
-.admonitionblock.important.artifact > table {
-  background: var(--adm-artifact-bg);
-}
-.admonitionblock.important.artifact > table td.content {
-  border-left-color: var(--adm-artifact-border);
-}
-.admonitionblock.important.artifact td.icon .title {
-  color: var(--adm-artifact-label-color);
-}
-.admonitionblock.important.artifact td.icon [class^="fa icon-"] {
-  color: var(--adm-artifact-icon-color);
-}
-
-/* --- Cover Page Roles --- */
-.paragraph.cover_kicker,
-.paragraph.cover_lab,
-.paragraph.cover_subtitle,
-.paragraph.cover_services,
-.paragraph.cover_dates,
-.paragraph.cover_term,
-.paragraph.cover_location,
-.paragraph.cover_instructor {
-  text-align: center;
-  margin-bottom: 0.25em;
-}
-
-.paragraph.cover_kicker p {
-  font-size: var(--cover-kicker-size);
-  font-weight: 700;
-  color: var(--cover-kicker-color);
-}
-
-.paragraph.cover_lab p {
-  font-family: var(--heading-font);
-  font-size: var(--cover-lab-size);
-  font-weight: 700;
-  color: var(--cover-lab-color);
-  margin-top: 0.3em;
-  margin-bottom: 0.15em;
-}
-
-.paragraph.cover_subtitle p {
-  font-family: var(--heading-font);
-  font-size: var(--cover-subtitle-size);
-  font-weight: 700;
-  color: var(--cover-subtitle-color);
-  margin-bottom: 0.5em;
-}
-
-.paragraph.cover_services p {
-  font-size: var(--cover-services-size);
-  color: var(--cover-services-color);
-  margin-bottom: 0.75em;
-}
-
-.paragraph.cover_dates p {
-  font-size: var(--cover-dates-size);
-  font-weight: 700;
-  color: var(--cover-dates-color);
-}
-
-.paragraph.cover_term p {
-  font-family: var(--heading-font);
-  font-size: var(--cover-term-size);
-  font-weight: 700;
-  color: var(--cover-term-color);
-  margin-top: 0.5em;
-}
-
-.paragraph.cover_location p {
-  font-size: var(--cover-location-size);
-  color: var(--cover-location-color);
-}
-
-.paragraph.cover_instructor p {
-  font-family: var(--heading-font);
-  font-size: var(--cover-instructor-size);
-  font-weight: 700;
-  color: var(--cover-instructor-color);
-  margin-top: 0.4em;
-  margin-bottom: 1em;
-}
-
-/* --- Images --- */
-.imageblock {
-  margin-bottom: 1.25em;
-}
-.imageblock img {
-  max-width: 100%;
-  height: auto;
-}
-
-/* --- Block titles --- */
-.admonitionblock td.content > .title,
-.listingblock > .title,
-.literalblock > .title,
-.tableblock > .title,
-.paragraph > .title,
-.olist > .title,
-.ulist > .title {
-  font-style: italic;
-  color: var(--heading-color);
-  font-size: 0.95rem;
-  margin-bottom: 0.25em;
-}
-
-/* --- Page breaks (for screen: visual separator; for print: actual break) --- */
-div[style*="page-break-after"] {
-  border-bottom: 1px dashed #C8CFC9;
-  margin: 2em 0;
-}
-
-/* --- Footer --- */
-#footer {
-  background: none;
-  border-top: 0.5px solid var(--footer-border);
-  padding: 0.75em 1.25em;
-  margin-top: 2em;
-}
-
-#footer-text {
-  color: var(--footer-color);
-  font-size: 0.8rem;
-  line-height: 1.4;
-}
-
-/* --- Print Styles --- */
-@media print {
-  body {
-    font-size: 10.5pt;
-    line-height: 1.38;
-  }
-
-  @page {
-    size: Letter;
-    margin: 0.75in 0.85in;
-  }
-
-  #header, #content, #footnotes, #footer {
-    max-width: none;
-    padding: 0;
-  }
-
-  a {
-    color: var(--link-color);
-    text-decoration: none;
-  }
-
-  /* Print page breaks */
-  div[style*="page-break-after"] {
-    border: none;
-    margin: 0;
-    page-break-after: always;
-  }
-
-  h2, h3 {
-    page-break-after: avoid;
-  }
-
-  .admonitionblock > table,
-  .listingblock pre {
-    page-break-inside: avoid;
-  }
-
-  /* Print footer */
-  #footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    border-top: 0.5px solid var(--footer-border);
-  }
-}
-
-</style>
+<meta name="generator" content="Asciidoctor 2.0.23">
+<meta name="author" content="IT Project Management — Case Analysis Assignment">
+<title>Project DataFlow</title>
+<link rel="stylesheet" href="./uncc-theme.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-pre.rouge table td { padding: 5px; }
-pre.rouge table pre { margin: 0; }
-pre.rouge, pre.rouge .w {
-  color: #24292f;
-  background-color: #f6f8fa;
-}
-pre.rouge .k, pre.rouge .kd, pre.rouge .kn, pre.rouge .kp, pre.rouge .kr, pre.rouge .kt, pre.rouge .kv {
-  color: #cf222e;
-}
-pre.rouge .gr {
-  color: #f6f8fa;
-}
-pre.rouge .gd {
-  color: #82071e;
-  background-color: #ffebe9;
-}
-pre.rouge .nb {
-  color: #953800;
-}
-pre.rouge .nc {
-  color: #953800;
-}
-pre.rouge .no {
-  color: #953800;
-}
-pre.rouge .nn {
-  color: #953800;
-}
-pre.rouge .sr {
-  color: #116329;
-}
-pre.rouge .na {
-  color: #116329;
-}
-pre.rouge .nt {
-  color: #116329;
-}
-pre.rouge .gi {
-  color: #116329;
-  background-color: #dafbe1;
-}
-pre.rouge .ges {
-  font-weight: bold;
-  font-style: italic;
-}
-pre.rouge .kc {
-  color: #0550ae;
-}
-pre.rouge .l, pre.rouge .ld, pre.rouge .m, pre.rouge .mb, pre.rouge .mf, pre.rouge .mh, pre.rouge .mi, pre.rouge .il, pre.rouge .mo, pre.rouge .mx {
-  color: #0550ae;
-}
-pre.rouge .sb {
-  color: #0550ae;
-}
-pre.rouge .bp {
-  color: #0550ae;
-}
-pre.rouge .ne {
-  color: #0550ae;
-}
-pre.rouge .nl {
-  color: #0550ae;
-}
-pre.rouge .py {
-  color: #0550ae;
-}
-pre.rouge .nv, pre.rouge .vc, pre.rouge .vg, pre.rouge .vi, pre.rouge .vm {
-  color: #0550ae;
-}
-pre.rouge .o, pre.rouge .ow {
-  color: #0550ae;
-}
-pre.rouge .gh {
-  color: #0550ae;
-  font-weight: bold;
-}
-pre.rouge .gu {
-  color: #0550ae;
-  font-weight: bold;
-}
-pre.rouge .s, pre.rouge .sa, pre.rouge .sc, pre.rouge .dl, pre.rouge .sd, pre.rouge .s2, pre.rouge .se, pre.rouge .sh, pre.rouge .sx, pre.rouge .s1, pre.rouge .ss {
-  color: #0a3069;
-}
-pre.rouge .nd {
-  color: #8250df;
-}
-pre.rouge .nf, pre.rouge .fm {
-  color: #8250df;
-}
-pre.rouge .err {
-  color: #f6f8fa;
-  background-color: #82071e;
-}
-pre.rouge .c, pre.rouge .ch, pre.rouge .cd, pre.rouge .cm, pre.rouge .cp, pre.rouge .cpf, pre.rouge .c1, pre.rouge .cs {
-  color: #6e7781;
-}
-pre.rouge .gl {
-  color: #6e7781;
-}
-pre.rouge .gt {
-  color: #6e7781;
-}
-pre.rouge .ni {
-  color: #24292f;
-}
-pre.rouge .si {
-  color: #24292f;
-}
-pre.rouge .ge {
-  color: #24292f;
-  font-style: italic;
-}
-pre.rouge .gs {
-  color: #24292f;
-  font-weight: bold;
-}
-</style>
+<link rel="stylesheet" href="./rouge-github.css">
 </head>
-<body class="article">
+<body class="article toc2 toc-left">
 <div id="header">
+<h1>Project DataFlow</h1>
+<div class="details">
+<span id="author" class="author">IT Project Management — Case Analysis Assignment</span><br>
+<span id="revdate">2024</span>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_case_narrative">Case Narrative</a></li>
+<li><a href="#_assignment_requirements">Assignment Requirements</a></li>
+<li><a href="#_document_a_original_project_charter_excerpt">Document A: Original Project Charter Excerpt</a></li>
+<li><a href="#_document_b_change_request_log_excerpt">Document B: Change Request Log (Excerpt)</a></li>
+<li><a href="#_document_c_original_project_schedule_month_1">Document C: Original Project Schedule (Month 1)</a></li>
+<li><a href="#_document_d_current_resource_allocation_month_6_snapshot">Document D: Current Resource Allocation (Month 6 Snapshot)</a></li>
+<li><a href="#_document_e_monthly_status_report_month_5">Document E: Monthly Status Report (Month 5)</a></li>
+<li><a href="#_document_f_team_communication_artifacts">Document F: Team Communication Artifacts</a></li>
+<li><a href="#_document_g_anonymous_team_survey_results">Document G: Anonymous Team Survey Results</a></li>
+<li><a href="#_document_h_client_communications">Document H: Client Communications</a></li>
+<li><a href="#_document_i_financial_summary_month_6">Document I: Financial Summary (Month 6)</a></li>
+<li><a href="#_document_j_compliance_and_regulatory_context">Document J: Compliance and Regulatory Context</a></li>
+<li><a href="#_document_k_decision_point">Document K: Decision Point</a></li>
+<li><a href="#_earned_value_formulas">Earned Value Formulas</a></li>
+<li><a href="#_work_breakdown_structure_components">Work Breakdown Structure Components</a></li>
+<li><a href="#_the_four_types_of_work_phoenix_project_reference">The Four Types of Work (Phoenix Project Reference)</a></li>
+<li><a href="#_the_three_ways_phoenix_project_reference">The Three Ways (Phoenix Project Reference)</a></li>
+</ul>
+</div>
 </div>
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
-<div class="paragraph cover_kicker">
-<p>DSBA 6190 • Cloud Computing for Data Analysis</p>
+<div class="paragraph lead">
+<p>This document contains the complete case study materials for your Project DataFlow analysis, including the case narrative, assignment requirements, and supporting dossier of primary source documents.</p>
 </div>
-<div class="paragraph cover_lab">
-<p><strong>AWS Lab 2</strong></p>
-</div>
-<div class="paragraph cover_subtitle">
-<p>Distributed Computing</p>
-</div>
-<div class="paragraph cover_term">
-<p>Spring 2026</p>
-</div>
-<div class="paragraph cover_location">
-<p>UNC Charlotte</p>
-</div>
-<div class="paragraph cover_instructor">
-<p>Dr. Frazier Smith</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>This lab is designed for use within the AWS Academy Learner Lab environment. Service availability, instance types, and IAM constraints reflect the Learner Lab sandbox. Review the constraints table on the next page before starting.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
+<hr>
 <div style="page-break-after: always;"></div>
-<div id="toc" class="toc">
-<div id="toctitle" class="title">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#_lab_2_distributed_computing_for_data_processing">Lab 2: Distributed Computing for Data Processing</a>
-<ul class="sectlevel2">
-<li><a href="#_learner_lab_constraints">Learner Lab Constraints</a></li>
-<li><a href="#_session_management">Session Management</a></li>
-<li><a href="#_lab_overview">Lab Overview</a></li>
-<li><a href="#_part_1_containerizing_a_data_cleaning_pipeline">Part 1: Containerizing a Data Cleaning Pipeline</a>
-<ul class="sectlevel3">
-<li><a href="#_objectives">Objectives</a></li>
-<li><a href="#_tasks">Tasks</a></li>
-<li><a href="#_deliverables">Deliverables</a></li>
-</ul>
-</li>
-<li><a href="#_part_2_orchestrating_data_processing_on_amazon_eks">Part 2: Orchestrating Data Processing on Amazon EKS</a>
-<ul class="sectlevel3">
-<li><a href="#_objectives_2">Objectives</a></li>
-<li><a href="#_tasks_2">Tasks</a></li>
-<li><a href="#_deliverables_2">Deliverables</a></li>
-</ul>
-</li>
-<li><a href="#_part_3_analytical_transformations_with_amazon_emr_spark">Part 3: Analytical Transformations with Amazon EMR (Spark)</a>
-<ul class="sectlevel3">
-<li><a href="#_objectives_3">Objectives</a></li>
-<li><a href="#_tasks_3">Tasks</a></li>
-<li><a href="#_deliverables_3">Deliverables</a></li>
-</ul>
-</li>
-<li><a href="#_part_4_building_an_analytics_query_layer_with_athena">Part 4: Building an Analytics Query Layer with Athena</a>
-<ul class="sectlevel3">
-<li><a href="#_objectives_4">Objectives</a></li>
-<li><a href="#_tasks_4">Tasks</a></li>
-<li><a href="#_deliverables_4">Deliverables</a></li>
-</ul>
-</li>
-<li><a href="#_part_5_submission">Part 5: Submission</a>
-<ul class="sectlevel3">
-<li><a href="#_submission_structure">Submission Structure</a></li>
-<li><a href="#_artifact_checklist">Artifact Checklist</a></li>
-<li><a href="#_readme">README</a></li>
-<li><a href="#_submission_instructions">Submission Instructions</a></li>
-</ul>
-</li>
-<li><a href="#_final_cleanup">Final Cleanup</a></li>
-<li><a href="#_grading_rubric_75_points">Grading Rubric (75 points)</a></li>
-</ul>
-</li>
-</ul>
-</div>
-<div style="page-break-after: always;"></div>
+<h1 id="_part_one_case_narrative_and_assignment" class="discrete">Part One: Case Narrative and Assignment</h1>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_lab_2_distributed_computing_for_data_processing">Lab 2: Distributed Computing for Data Processing</h2>
+<h2 id="_case_narrative">Case Narrative</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_background">Background</h3>
 <div class="paragraph">
-<p><strong>Services:</strong> Docker, Amazon ECR, Amazon EKS, Amazon EMR (Spark), Amazon Athena, AWS Glue Data Catalog</p>
+<p>MedTech Solutions is a mid-sized healthcare technology company with 450 employees that provides electronic health record (EHR) systems to regional hospital networks. The company has been in business for 12 years and has a solid reputation for reliability, though competitors have begun offering more modern, cloud-based solutions.</p>
 </div>
-<div class="paragraph">
-<p><strong>Points:</strong> 75</p>
 </div>
 <div class="sect2">
-<h3 id="_learner_lab_constraints">Learner Lab Constraints</h3>
+<h3 id="_the_project">The Project</h3>
 <div class="paragraph">
-<p>Review these restrictions before starting. Exceeding instance limits can result in immediate account deactivation and loss of all work.</p>
+<p>Six months ago, MedTech&#8217;s executive team approved "Project DataFlow"—an ambitious initiative to migrate their legacy on-premises EHR system to a cloud-based microservices architecture. The project was given an 18-month timeline and a $4.2 million budget. Key drivers included:</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>Increasing customer demands for mobile access and real-time analytics</p>
+</li>
+<li>
+<p>Rising maintenance costs for legacy infrastructure (currently $1.8M annually)</p>
+</li>
+<li>
+<p>Competitive pressure from newer market entrants</p>
+</li>
+<li>
+<p>Technical debt accumulated over a decade of incremental updates</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_project_team">The Project Team</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Role</th>
+<th class="tableblock halign-left valign-top">Person</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Project Manager</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sarah Chen (10 years PM experience, PMP certified, but new to MedTech)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Technical Lead</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Marcus Williams (15-year MedTech veteran, deep legacy system knowledge)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Development Team</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">12 developers (mix of legacy experts and new cloud hires)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Operations Team</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6 system administrators</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QA Team</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4 testers</p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="_current_situation_month_6">Current Situation (Month 6)</h3>
+<div class="paragraph">
+<p>You have been brought in as an external consultant. The project sponsor, CTO David Okonkwo, has expressed serious concerns. Here is what your initial assessment reveals:</p>
+</div>
+<div class="sect3">
+<h4 id="_scope_issues">Scope Issues</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>The original project charter was approved with a two-paragraph scope statement</p>
+</li>
+<li>
+<p>No formal Work Breakdown Structure was ever created</p>
+</li>
+<li>
+<p>Stakeholders continue to request new features; 23 change requests have been logged, 18 were approved without formal impact analysis</p>
+</li>
+<li>
+<p>The development team is unsure which requirements are "must-have" vs. "nice-to-have"</p>
+</li>
+<li>
+<p>Two major hospital clients have been promised custom integrations that were never in the original scope</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_schedule_issues">Schedule Issues</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>The project is using a Gantt chart created in month 1 that has not been updated</p>
+</li>
+<li>
+<p>No critical path analysis was performed</p>
+</li>
+<li>
+<p>Dependencies between the legacy team and cloud team are causing constant delays</p>
+</li>
+<li>
+<p>Three developers have been pulled onto emergency maintenance work for existing clients an average of 15 hours per week</p>
+</li>
+<li>
+<p>Sprint planning meetings are routinely skipped due to "urgent priorities"</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cost_issues">Cost Issues</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>The project has spent $2.1 million (50% of budget) but completed only approximately 25% of planned functionality</p>
+</li>
+<li>
+<p>No earned value metrics are being tracked</p>
+</li>
+<li>
+<p>Cloud infrastructure costs are running 40% higher than estimated</p>
+</li>
+<li>
+<p>Two additional contractors were hired without budget approval</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_quality_issues">Quality Issues</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>No quality management plan exists</p>
+</li>
+<li>
+<p>Testing is done ad-hoc, usually the day before releases</p>
+</li>
+<li>
+<p>The QA team reports finding critical defects that were marked as "resolved" but never actually fixed</p>
+</li>
+<li>
+<p>Technical debt from the legacy system is being replicated in the new architecture</p>
+</li>
+<li>
+<p>Code reviews are inconsistent—some modules have had thorough reviews, others none</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_team_dynamics">Team Dynamics</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Marcus (Technical Lead) and Sarah (PM) have conflicting visions for the architecture</p>
+</li>
+<li>
+<p>Legacy developers feel marginalized and worry about job security</p>
+</li>
+<li>
+<p>Cloud developers are frustrated by what they perceive as "outdated thinking"</p>
+</li>
+<li>
+<p>Operations was not included in planning and now has concerns about deployment and monitoring</p>
+</li>
+<li>
+<p>The QA team feels ignored when they raise defect concerns</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_communication_issues">Communication Issues</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Status reports are sent monthly but contain only high-level summaries</p>
+</li>
+<li>
+<p>Stakeholders receive different information depending on who they ask</p>
+</li>
+<li>
+<p>No project dashboard or centralized information repository exists</p>
+</li>
+<li>
+<p>The executive sponsor receives optimistic updates while the team discusses serious problems</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_phoenix_project_connections">Phoenix Project Connections</h3>
+<div class="paragraph">
+<p>As you analyze this case, consider parallels to Parts Unlimited in <em>The Phoenix Project</em>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>The Four Types of Work:</strong> How is unplanned work affecting DataFlow? What business projects, IT projects, changes, and unplanned work can you identify?</p>
+</li>
+<li>
+<p><strong>Brent Syndrome:</strong> Is there a "Brent" in this scenario—a critical resource creating a bottleneck?</p>
+</li>
+<li>
+<p><strong>The Three Ways:</strong> How might principles of Flow, Feedback, and Continuous Learning apply?</p>
+</li>
+<li>
+<p><strong>Work in Progress (WIP):</strong> What evidence suggests WIP limits are needed?</p>
+</li>
+</ul>
+</div>
+<hr>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_assignment_requirements">Assignment Requirements</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_required_analysis">Required Analysis</h3>
+<div class="paragraph">
+<p>Your case analysis must address the following components:</p>
+</div>
+<div class="sect3">
+<h4 id="_part_1_diagnostic_assessment_25_points">Part 1: Diagnostic Assessment (25 points)</h4>
+<div class="paragraph">
+<p>Using concepts from Schwalbe Chapters 1-8, analyze the current state of Project DataFlow:</p>
+</div>
+<div class="paragraph">
+<p><strong>Project Integration Failures</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>What integration management processes were skipped or inadequately performed?</p>
+</li>
+<li>
+<p>How has the lack of integrated change control contributed to the current situation?</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Scope Management Analysis</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Critique the project&#8217;s scope management practices</p>
+</li>
+<li>
+<p>Identify specific scope creep instances and their root causes</p>
+</li>
+<li>
+<p>What scope management tools and techniques should have been used?</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Schedule Management Analysis</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>What scheduling techniques are missing or poorly implemented?</p>
+</li>
+<li>
+<p>Identify likely critical path issues based on the case information</p>
+</li>
+<li>
+<p>How are resource constraints affecting the schedule?</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Cost Management Analysis</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Calculate available earned value metrics from the information provided</p>
+</li>
+<li>
+<p>What does the current cost performance indicate about project health?</p>
+</li>
+<li>
+<p>What cost estimation and budgeting errors occurred?</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Quality Management Analysis</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>What quality planning, assurance, and control activities are absent?</p>
+</li>
+<li>
+<p>How is the cost of quality manifesting in this project?</p>
+</li>
+<li>
+<p>Connect quality issues to other knowledge area failures</p>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect3">
+<h4 id="_part_2_phoenix_project_analysis_25_points">Part 2: Phoenix Project Analysis (25 points)</h4>
+<div class="paragraph">
+<p>Apply concepts from <em>The Phoenix Project</em> (Chapters 1-24):</p>
+</div>
+<div class="paragraph">
+<p><strong>Identify the Constraints</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Who or what is the constraint (bottleneck) in Project DataFlow?</p>
+</li>
+<li>
+<p>How is unplanned work being managed (or not managed)?</p>
+</li>
+<li>
+<p>What evidence of the "downward spiral" do you see?</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>The Four Types of Work</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Categorize the work described in the case into the four types</p>
+</li>
+<li>
+<p>Which type is causing the most disruption? Why?</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Apply the First Way (Flow)</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>What would improve the flow of work from development to operations?</p>
+</li>
+<li>
+<p>How could visualizing work help this team?</p>
+</li>
+<li>
+<p>What WIP limits might you recommend?</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Apply the Second Way (Feedback)</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>What feedback loops are broken or missing?</p>
+</li>
+<li>
+<p>How could faster feedback prevent the issues described?</p>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect3">
+<h4 id="_part_3_recovery_recommendations_35_points">Part 3: Recovery Recommendations (35 points)</h4>
+<div class="paragraph">
+<p>Develop a comprehensive recovery plan that synthesizes both Schwalbe frameworks and Phoenix Project principles:</p>
+</div>
+<div class="paragraph">
+<p><strong>Immediate Actions (Week 1-2)</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>What must happen immediately to stabilize the project?</p>
+</li>
+<li>
+<p>Prioritize your recommendations</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Short-term Recovery (Month 1-2)</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Scope recovery strategy with specific tools and techniques</p>
+</li>
+<li>
+<p>Schedule recovery approach (include whether crashing or fast-tracking is appropriate)</p>
+</li>
+<li>
+<p>Cost recovery recommendations</p>
+</li>
+<li>
+<p>Quality improvement plan</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Process Improvements</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Specific process changes to implement</p>
+</li>
+<li>
+<p>How to address the team dynamics issues</p>
+</li>
+<li>
+<p>Communication management improvements</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Deliverables to Create</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>List and briefly describe 5 key project documents that must be created or revised</p>
+</li>
+<li>
+<p>Explain how each addresses current deficiencies</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_part_4_lessons_learned_15_points">Part 4: Lessons Learned (15 points)</h4>
+<div class="paragraph">
+<p><strong>Root Cause Analysis</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>What were the fundamental causes of Project DataFlow&#8217;s problems?</p>
+</li>
+<li>
+<p>How could these issues have been prevented?</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Organizational Recommendations</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>What organizational changes should MedTech consider for future projects?</p>
+</li>
+<li>
+<p>How can DevOps principles be integrated into their project management approach?</p>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_format_requirements">Format Requirements</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Element</th>
+<th class="tableblock halign-left valign-top">Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Length</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8-10 pages of content (excluding title page, references, appendices)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Font</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">12-point Times New Roman or 11-point Calibri</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Spacing</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Double-spaced</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Margins</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1 inch all sides</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Citations</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">APA 7th Edition format</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Minimum Sources</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6 sources (must include both course textbooks plus 4 additional scholarly or professional sources)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_required_sections">Required Sections</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Title Page</p>
+</li>
+<li>
+<p>Executive Summary (1 page max, not counted in page limit)</p>
+</li>
+<li>
+<p>Diagnostic Assessment</p>
+</li>
+<li>
+<p>Phoenix Project Analysis</p>
+</li>
+<li>
+<p>Recovery Recommendations</p>
+</li>
+<li>
+<p>Lessons Learned</p>
+</li>
+<li>
+<p>References</p>
+</li>
+<li>
+<p>Appendices (optional—may include diagrams, tables, or calculations)</p>
+</li>
+</ol>
+</div>
+<hr>
+<div style="page-break-after: always;"></div>
+<h1 id="_part_two_project_dossier" class="discrete">Part Two: Project Dossier</h1>
+<div class="paragraph lead">
+<p>This dossier contains primary source documents, data artifacts, and stakeholder communications collected during the initial assessment of Project DataFlow. These materials supplement the case narrative and should be analyzed as part of your diagnostic assessment.</p>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_document_a_original_project_charter_excerpt">Document A: Original Project Charter Excerpt</h2>
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The following scope statement was approved by the Executive Steering Committee on July 15, 2023. This represents the complete scope documentation that existed at project initiation.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_project_dataflow_scope_statement">Project DataFlow — Scope Statement</h3>
+<div class="paragraph">
+<p><strong>Project Purpose:</strong> Modernize MedTech Solutions' electronic health record platform to meet evolving customer needs and reduce operational costs.</p>
+</div>
+<div class="paragraph">
+<p><strong>Project Scope:</strong> The project team will migrate the existing on-premises EHR system to a cloud-based architecture using modern microservices patterns. The new system will provide equivalent functionality to the current system while enabling mobile access capabilities and improved analytics. The migration will be completed within 18 months with minimal disruption to existing customers.</p>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_document_b_change_request_log_excerpt">Document B: Change Request Log (Excerpt)</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 8.3333%;">
+<col style="width: 16.6666%;">
+<col style="width: 25%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6669%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">CR#</th>
+<th class="tableblock halign-left valign-top">Date Submitted</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Requestor</th>
+<th class="tableblock halign-left valign-top">Impact Analysis</th>
+<th class="tableblock halign-left valign-top">Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CR-001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Aug 3, 2023</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Add single sign-on integration with Active Directory</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Marcus Williams</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">None documented</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Approved (Aug 5)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CR-003</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Aug 18, 2023</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Include real-time bed availability dashboard for Regional Health Partners</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">David Okonkwo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">None documented</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Approved (Aug 18)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CR-005</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sep 2, 2023</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Expand mobile app to include medication scanning</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sarah Chen</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"Estimate: 3 weeks dev" (email)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Approved (Sep 4)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CR-007</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sep 14, 2023</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Custom HL7 FHIR interface for Lakeside Medical Center</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">David Okonkwo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">None documented</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Approved (Sep 14)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CR-009</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Oct 1, 2023</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Add patient portal with appointment scheduling</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Regional Health Partners (via David)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">None documented</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Approved (Oct 3)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CR-012</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Oct 22, 2023</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integrate with three additional pharmacy networks</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sales Team</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">None documented</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Approved (Oct 28)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CR-014</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nov 8, 2023</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Offline capability for mobile app in low-connectivity areas</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Marcus Williams</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"Significant architectural implications" (verbal, no documentation)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Approved (Nov 12)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CR-016</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nov 20, 2023</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Custom reporting package for Lakeside Medical Center</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">David Okonkwo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">None documented</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Approved (Nov 21)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CR-018</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dec 5, 2023</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Voice-to-text integration for clinical notes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Regional Health Partners</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">None documented</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Approved (Dec 8)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CR-021</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dec 18, 2023</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Predictive analytics module for patient readmission risk</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">David Okonkwo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">None documented</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Approved (Dec 19)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><strong>Assessment Note:</strong> Of the 23 change requests logged, 18 were approved. The log shows no formal impact analysis documentation for any approved request. Average time from submission to approval: 3.2 days.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_document_c_original_project_schedule_month_1">Document C: Original Project Schedule (Month 1)</h2>
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This Gantt chart was created during the first week of the project. No updates have been made since initial creation.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 36.3636%;">
+<col style="width: 18.1818%;">
+<col style="width: 18.1818%;">
+<col style="width: 18.1818%;">
+<col style="width: 9.091%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Milestone</th>
+<th class="tableblock halign-left valign-top">Planned Start</th>
+<th class="tableblock halign-left valign-top">Planned End</th>
+<th class="tableblock halign-left valign-top">Planned Spend (Cumulative)</th>
+<th class="tableblock halign-left valign-top">Status at Month 6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Phase 1: Architecture &amp; Design</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Month 1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Month 2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">$400,000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Complete</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Phase 2: Core Platform Development</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Month 2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Month 6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">$1,400,000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">~60% complete</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Phase 3: Legacy Data Migration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Month 5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Month 9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">$2,200,000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Not started</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Phase 4: Integration &amp; Testing</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Month 8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Month 14</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">$3,200,000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Not started</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Phase 5: Pilot Deployment</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Month 13</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Month 16</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">$3,800,000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Not started</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Phase 6: Full Rollout &amp; Transition</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Month 15</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Month 18</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">$4,200,000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Not started</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="_original_resource_assumptions">Original Resource Assumptions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Development team fully dedicated to project (0% allocation to other work)</p>
+</li>
+<li>
+<p>No external dependencies beyond standard vendor support</p>
+</li>
+<li>
+<p>Cloud infrastructure costs estimated at $15,000/month during development</p>
+</li>
+</ul>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_document_d_current_resource_allocation_month_6_snapshot">Document D: Current Resource Allocation (Month 6 Snapshot)</h2>
+<div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 30%;">
-<col style="width: 70%;">
+<col style="width: 20%;">
+<col style="width: 30%;">
+<col style="width: 20%;">
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top"><strong>Service</strong></th>
-<th class="tableblock halign-left valign-top"><strong>Constraint</strong></th>
+<th class="tableblock halign-left valign-top">Team Member</th>
+<th class="tableblock halign-left valign-top">Role</th>
+<th class="tableblock halign-left valign-top">Current Allocation to DataFlow</th>
+<th class="tableblock halign-left valign-top">Notes</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">EC2 / EKS / EMR</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Instance types limited to nano, micro, small, medium, and large. Maximum 9 concurrent EC2 instances across all services; maximum 32 vCPU total. Exceeding 20 running instances deactivates the account immediately.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sarah Chen</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Project Manager</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">100%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Also handling stakeholder escalations for legacy system</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">EKS</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Must use LabEksClusterRole (not LabRole) for both the cluster role and the node group role.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Marcus Williams</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Technical Lead</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">70%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pulled into legacy system critical fixes</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">EKS</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">OIDC provider creation is blocked. Use <code>withOIDC: false</code> in the eksctl config.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">James Rodriguez</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Senior Developer (Legacy)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">50%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Primary resource for emergency maintenance</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">EMR</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Use m4.large instances. Clusters do not survive session ends—all EC2 instances are stopped when the timer hits 0:00 and EMR does not support stop/restart. Write results to S3 before ending your session.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Aisha Patel</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Senior Developer (Legacy)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">60%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supporting legacy defect resolution</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ECR</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">LabRole/LabInstanceProfile may be read-only. Push images using your Learner Lab console user credentials (not the default instance role credentials).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Michael Torres</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Developer (Legacy)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">55%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cross-training on cloud architecture</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Glue</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Uses LabRole. Worker type limited to G.1X or Standard; maximum 10 workers.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jennifer Walsh</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Developer (Legacy)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">45%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Primarily on legacy maintenance</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Athena</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Uses LabRole. You must configure an S3 location for query results before running queries.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">David Kim</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Senior Developer (Cloud)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">90%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Leading API development</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Priya Sharma</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Developer (Cloud)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">85%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Working on authentication services</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alex Chen</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Developer (Cloud)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">95%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mobile app development</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Lisa Park</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Developer (Cloud)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">80%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Database migration scripts</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tom Bradley</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Contractor (Cloud)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">100%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Added Month 4, no budget approval</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nina Kowalski</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Contractor (Cloud)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">100%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Added Month 5, no budget approval</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Robert Chen</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ops Engineer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">30%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Not formally assigned to project</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maria Santos</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ops Engineer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">20%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Learning cloud infrastructure independently</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="sect2">
-<h3 id="_session_management">Session Management</h3>
-<div class="paragraph">
-<p>This lab spans multiple Learner Lab sessions. Each part produces output stored in S3, which persists across sessions. Compute resources (EC2 instances, EKS clusters, EMR clusters) do not survive session ends and must be cleaned up before you stop. The following table summarizes what persists and what does not:</p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 26%;">
-<col style="width: 37%;">
-<col style="width: 37%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top"><strong>Resource</strong></th>
-<th class="tableblock halign-left valign-top"><strong>Survives Session End?</strong></th>
-<th class="tableblock halign-left valign-top"><strong>Action Required</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">S3 buckets and data</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No action needed</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ECR images</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No action needed</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Glue databases/tables</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No action needed</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Athena settings</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No action needed</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">EC2 instances</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Stopped (not terminated)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Can restart in next session</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">EKS clusters</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>No</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Delete before stopping</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">EMR clusters</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>No</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Terminate before stopping</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">CloudShell binaries</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Home dir yes; /usr/local/bin no</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Reinstall eksctl if needed</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>Each part includes a stopping-point box at the end that tells you exactly what to clean up before ending your session. Each part (except Part 1) also includes a resume box at the top with instructions for starting from a new session.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_lab_overview">Lab Overview</h3>
-<div class="paragraph">
-<p>This lab builds an end-to-end distributed data processing pipeline for a realistic analytics scenario. You will work with a public trip-record dataset (such as NYC Taxi or Chicago rideshare data) that is too large to process efficiently on a single machine. The pipeline moves through four stages: containerizing a data-cleaning script so it can run repeatably in any environment, orchestrating that container on Kubernetes for scalable batch processing, running heavier analytical transformations with Spark on EMR, and making the final results queryable through Athena so analysts can run SQL against the processed data without managing any infrastructure.</p>
-</div>
-<div class="paragraph">
-<p>Each part produces output that feeds into the next, mirroring how data engineering teams build layered data platforms in practice: raw ingestion, cleaning, transformation, and an analytics-ready query layer.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_part_1_containerizing_a_data_cleaning_pipeline">Part 1: Containerizing a Data Cleaning Pipeline</h3>
-<div class="paragraph">
-<p><strong>Estimated time:</strong> 45–60 minutes</p>
-</div>
-<div class="sect3">
-<h4 id="_objectives">Objectives</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Write a Dockerfile for a Python data-cleaning script that handles common quality issues in the raw dataset (null values, outliers, schema normalization)</p>
-</li>
-<li>
-<p>Build and test the container image locally, verifying that the cleaned output conforms to an expected schema</p>
-</li>
-<li>
-<p>Push the image to Amazon ECR so it can be pulled by orchestration services in subsequent parts</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_tasks">Tasks</h4>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Create an S3 bucket to hold your lab data. In the AWS Console, navigate to S3 &gt; Create bucket. Name it something unique such as dsba6190-yourname-lab2. Keep the default settings (us-east-1, ACLs disabled, Block all public access enabled) and choose Create bucket.</p>
-</li>
-<li>
-<p>Upload the provided cleaning script (clean_trips.py), sample data partition (sample_trips.csv), and the three monthly data files (trips_2023_01.csv, trips_2023_02.csv, trips_2023_03.csv) to your bucket. Upload the monthly files into partitioned prefixes for later use in Part 2:</p>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash"><span class="c"># You can upload via the S3 console (drag and drop) or from CloudShell:</span>
-<span class="c"># Script and sample data (for Part 1 testing)</span>
-aws s3 <span class="nb">cp </span>clean_trips.py s3://dsba6190-yourname-lab2/
-aws s3 <span class="nb">cp </span>sample_trips.csv s3://dsba6190-yourname-lab2/
-<span class="c"># Monthly partitions (for Part 2 — upload now while you have the files)</span>
-aws s3 <span class="nb">cp </span>trips_2023_01.csv s3://dsba6190-yourname-lab2/raw/month<span class="o">=</span>01/
-aws s3 <span class="nb">cp </span>trips_2023_02.csv s3://dsba6190-yourname-lab2/raw/month<span class="o">=</span>02/
-aws s3 <span class="nb">cp </span>trips_2023_03.csv s3://dsba6190-yourname-lab2/raw/month<span class="o">=</span>03/</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Also upload the PySpark script (spark_aggregations.py) and zone lookup table (zone_lookup.csv) for Part 3. Uploading all files to S3 now means you will not need local copies in later sessions:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">aws s3 <span class="nb">cp </span>spark_aggregations.py s3://dsba6190-yourname-lab2/scripts/
-aws s3 <span class="nb">cp </span>zone_lookup.csv s3://dsba6190-yourname-lab2/reference/</code></pre>
-</div>
-</div>
-<div class="olist arabic">
-<ol class="arabic" start="3">
-<li>
-<p>Launch an EC2 instance for Docker work. Navigate to EC2 &gt; Launch instances and configure as follows:</p>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="text">Name: lab2-docker-build
-AMI: Amazon Linux 2023 (Quick Start, first option)
-Instance type: t3.small
-Key pair: vockey
-Network: Default VPC, Auto-assign public IP = Enable
-Security group: Create new, allow SSH (port 22) from My IP
-Under Advanced details:
-IAM instance profile: LabInstanceProfile</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Choose Launch instance. Wait for the instance state to show "Running" and the status check to show "2/2 checks passed" (typically 1–2 minutes).</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic" start="4">
-<li>
-<p>Connect to the instance. Select the instance in the EC2 console, choose Connect, then use the EC2 Instance Connect tab (browser-based SSH). Alternatively, from CloudShell:</p>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">ssh <span class="nt">-i</span> ~/.ssh/labsuser.pem ec2-user@&lt;public-ip&gt;</code></pre>
-</div>
-</div>
-<div class="olist arabic">
-<ol class="arabic" start="5">
-<li>
-<p>Verify Docker is available and download your files from S3:</p>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">docker <span class="nt">--version</span>
-<span class="c"># Should output Docker version 2x.x.x or similar</span>
-<span class="nb">mkdir</span> ~/lab2 <span class="o">&amp;&amp;</span> <span class="nb">cd</span> ~/lab2
-aws s3 <span class="nb">cp </span>s3://dsba6190-yourname-lab2/clean_trips.py <span class="nb">.</span>
-aws s3 <span class="nb">cp </span>s3://dsba6190-yourname-lab2/sample_trips.csv .</code></pre>
-</div>
-</div>
-<div class="olist arabic">
-<ol class="arabic" start="6">
-<li>
-<p>Create a Dockerfile in the ~/lab2 directory. The cleaning script uses pandas and pyarrow to read CSV, filter bad rows, and write Parquet. The container should accept S3 input/output paths as command-line arguments:</p>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="dockerfile"><span class="k">FROM</span><span class="s"> python:3.11-slim</span>
-<span class="k">WORKDIR</span><span class="s"> /app</span>
-<span class="k">RUN </span>pip <span class="nb">install</span> <span class="nt">--no-cache-dir</span> pandas pyarrow boto3
-<span class="k">COPY</span><span class="s"> clean_trips.py .</span>
-<span class="k">ENTRYPOINT</span><span class="s"> ["python", "clean_trips.py"]</span></code></pre>
-</div>
-</div>
-<div class="olist arabic">
-<ol class="arabic" start="7">
-<li>
-<p>Build and test the image locally against the sample data:</p>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">docker build <span class="nt">-t</span> trip-cleaner:latest <span class="nb">.</span>
-<span class="c"># Test with local files mounted (not S3) for quick validation</span>
-docker run <span class="nt">--rm</span> <span class="se">\</span>
-<span class="nt">-v</span> ~/lab2:/data <span class="se">\</span>
-trip-cleaner:latest <span class="se">\</span>
-<span class="nt">--input</span> /data/sample_trips.csv <span class="se">\</span>
-<span class="nt">--output</span> /data/cleaned_sample.parquet</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The script should print a summary: input row count, rows dropped by each filter (nulls, duration outliers, distance outliers), and final output row count. Verify the output Parquet file was created.</p>
-</div>
-<div class="admonitionblock important artifact">
+<div class="admonitionblock warning">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title="Important"></i>
+<i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
 <div class="paragraph">
-<p><strong>Artifact Checkpoint (Part 1, Step 7)</strong></p>
-</div>
-<div class="paragraph">
-<p>Capture a screenshot of this <code>docker run</code> output before moving on. The screenshot must clearly show input row count, rows filtered, and final row count.</p>
+<p><strong>Assessment Note:</strong> Legacy developers are averaging 15 hours/week on emergency maintenance for existing clients. Cloud infrastructure costs are currently running at $21,000/month (40% over estimate). Two contractors were added without formal budget approval, representing approximately $35,000/month in unplanned spend.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
-<div class="olist arabic">
-<ol class="arabic" start="8">
-<li>
-<p>Create an ECR repository and push the image. From the EC2 instance terminal, first confirm your AWS CLI identity. If ECR push commands return AccessDenied under LabRole/LabInstanceProfile, configure the AWS CLI with your Learner Lab console user keys before pushing:</p>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash"><span class="c"># Check which identity your shell is using for ECR API calls</span>
-aws sts get-caller-identity
-<span class="c"># If needed, configure console user credentials in this shell:</span>
-<span class="c"># aws configure</span>
-<span class="c"># Get your AWS account ID</span>
-<span class="nv">ACCOUNT_ID</span><span class="o">=</span><span class="si">$(</span>aws sts get-caller-identity <span class="nt">--query</span> Account <span class="nt">--output</span> text<span class="si">)</span>
-<span class="nv">REGION</span><span class="o">=</span>us-east-1
-<span class="c"># Create the repository</span>
-aws ecr create-repository <span class="nt">--repository-name</span> trip-cleaner <span class="nt">--region</span> <span class="nv">$REGION</span>
-<span class="c"># Authenticate Docker to ECR</span>
-aws ecr get-login-password <span class="nt">--region</span> <span class="nv">$REGION</span> | <span class="se">\</span>
-docker login <span class="nt">--username</span> AWS <span class="nt">--password-stdin</span> <span class="se">\</span>
-<span class="nv">$ACCOUNT_ID</span>.dkr.ecr.<span class="nv">$REGION</span>.amazonaws.com
-<span class="c"># Tag and push</span>
-docker tag trip-cleaner:latest <span class="se">\</span>
-<span class="nv">$ACCOUNT_ID</span>.dkr.ecr.<span class="nv">$REGION</span>.amazonaws.com/trip-cleaner:latest
-docker push <span class="se">\</span>
-<span class="nv">$ACCOUNT_ID</span>.dkr.ecr.<span class="nv">$REGION</span>.amazonaws.com/trip-cleaner:latest</code></pre>
+<hr>
 </div>
 </div>
-<div class="paragraph">
-<p>Wait for the push to complete. Verify the image appears in the ECR console: navigate to Amazon ECR &gt; Repositories &gt; trip-cleaner. You should see the "latest" tag with the image size and push date.</p>
-</div>
-<div class="admonitionblock important artifact">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p><strong>Artifact Checkpoint (Part 1, Step 8)</strong></p>
-</div>
-<div class="paragraph">
-<p>After the push completes, capture a screenshot in the ECR console showing the <code>trip-cleaner</code> repository and the <code>latest</code> image tag.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_deliverables">Deliverables</h4>
-<div class="admonitionblock important artifact">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p><strong>Artifact Submission Required</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Dockerfile and cleaning script (clean_trips.py)</p>
-</li>
-<li>
-<p>Screenshot of the docker run output showing input row count, rows filtered, and final row count</p>
-</li>
-<li>
-<p>Screenshot of the image listed in the ECR repository console</p>
-</li>
-</ul>
-</div>
-</td>
-</tr>
-</table>
-</div>
+<div class="sect1">
+<h2 id="_document_e_monthly_status_report_month_5">Document E: Monthly Status Report (Month 5)</h2>
+<div class="sectionbody">
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1284,333 +997,273 @@ docker push <span class="se">\</span>
 </td>
 <td class="content">
 <div class="paragraph">
-<p><strong>Stopping after Part 1</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Stop or terminate the EC2 instance: EC2 &gt; Instances &gt; select lab2-docker-build &gt; Instance state &gt; Stop instance.</p>
-</li>
-<li>
-<p>Your ECR image persists across sessions — you do not need to rebuild or re-push it.</p>
-</li>
-<li>
-<p>Your S3 bucket and all uploaded data (including the monthly partitions and Spark files) persist across sessions.</p>
-</li>
-<li>
-<p>You can safely end your Learner Lab session.</p>
-</li>
-</ul>
+<p>This report was sent to the Executive Steering Committee. Compare its tone and content to the actual project data.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
+<div class="paragraph text-center">
+<p><strong>PROJECT DATAFLOW — EXECUTIVE STATUS REPORT</strong><br>
+<strong>Reporting Period: Month 5</strong></p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_part_2_orchestrating_data_processing_on_amazon_eks">Part 2: Orchestrating Data Processing on Amazon EKS</h3>
+<hr>
 <div class="paragraph">
-<p><strong>Estimated time:</strong> 60–90 minutes (includes ~15 min cluster provisioning)</p>
+<p><strong>Overall Status:</strong> <span class="yellow"><strong>YELLOW</strong></span> — On Track with Minor Risks</p>
 </div>
-<div class="admonitionblock tip">
-<table>
+<div class="paragraph">
+<p><strong>Executive Summary:</strong></p>
+</div>
+<div class="paragraph">
+<p>Project DataFlow continues to make solid progress toward our modernization goals. The development team has completed the architecture phase and is well into core platform development. We have successfully onboarded additional cloud expertise to accelerate delivery.</p>
+</div>
+<div class="paragraph">
+<p><strong>Key Accomplishments This Period:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Completed authentication microservice deployment</p>
+</li>
+<li>
+<p>Initiated mobile application framework development</p>
+</li>
+<li>
+<p>Onboarded two experienced cloud contractors</p>
+</li>
+<li>
+<p>Addressed several high-priority customer enhancement requests</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Schedule Status:</strong></p>
+</div>
+<div class="paragraph">
+<p>Development activities are progressing. Some dependencies between legacy and cloud teams are being actively managed.</p>
+</div>
+<div class="paragraph">
+<p><strong>Budget Status:</strong></p>
+</div>
+<div class="paragraph">
+<p>Spending is in line with project activities. Cloud infrastructure investments are enabling rapid development velocity.</p>
+</div>
+<div class="paragraph">
+<p><strong>Risks &amp; Issues:</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 14.2857%;">
+<col style="width: 42.8572%;">
+</colgroup>
+<thead>
 <tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p><strong>Starting Part 2 in a new session?</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Start your Learner Lab session and open the AWS Console.</p>
-</li>
-<li>
-<p>Verify your S3 data is intact: navigate to S3, open your bucket, and confirm the raw/month=01/, raw/month=02/, and raw/month=03/ prefixes contain the monthly CSV files. (You uploaded these in Part 1, Step 2.)</p>
-</li>
-<li>
-<p>Verify your ECR image is intact: navigate to ECR &gt; Repositories &gt; trip-cleaner. The "latest" tag should still be listed.</p>
-</li>
-<li>
-<p>You do not need the EC2 instance from Part 1. If it is still in "Stopped" state, leave it stopped.</p>
-</li>
-<li>
-<p>Open CloudShell for the steps below.</p>
-</li>
-</ul>
-</div>
-</td>
+<th class="tableblock halign-left valign-top">Risk/Issue</th>
+<th class="tableblock halign-left valign-top">Severity</th>
+<th class="tableblock halign-left valign-top">Mitigation</th>
 </tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resource availability for legacy expertise</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cross-training program initiated</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cloud cost variability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Low</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Monitoring dashboards implemented</p></td>
+</tr>
+</tbody>
 </table>
+<div class="paragraph">
+<p><strong>Next Period Focus:</strong></p>
 </div>
-<div class="sect3">
-<h4 id="_objectives_2">Objectives</h4>
 <div class="ulist">
 <ul>
 <li>
-<p>Deploy the containerized cleaning pipeline as a Kubernetes Job on EKS, processing multiple data partitions in parallel</p>
+<p>Continue core API development</p>
 </li>
 <li>
-<p>Understand how container orchestration enables horizontal scaling of data processing workloads</p>
+<p>Begin legacy data migration planning</p>
 </li>
 <li>
-<p>Verify the cleaned dataset in S3 is ready for downstream Spark processing</p>
+<p>Advance mobile app functionality</p>
 </li>
 </ul>
 </div>
+<hr>
+<div class="paragraph">
+<p><strong>Report Prepared By:</strong> Sarah Chen, Project Manager<br>
+<strong>Distribution:</strong> Executive Steering Committee</p>
 </div>
-<div class="sect3">
-<h4 id="_tasks_2">Tasks</h4>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Open CloudShell (the terminal icon at the top of the AWS Console). Install eksctl. CloudShell preserves your home directory between sessions, but /usr/local/bin is reset each time. Install eksctl to your home directory so it persists:</p>
-</li>
-</ol>
+<hr>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_document_f_team_communication_artifacts">Document F: Team Communication Artifacts</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_artifact_f_1_slack_thread_development_channel">Artifact F-1: Slack Thread (Development Channel)</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash"><span class="c"># Download eksctl</span>
-curl <span class="nt">-sLO</span> <span class="s2">"https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_Linux_amd64.tar.gz"</span>
-<span class="nb">tar</span> <span class="nt">-xzf</span> eksctl_Linux_amd64.tar.gz
-<span class="c"># Install to home directory (persists across CloudShell sessions)</span>
-<span class="nb">mkdir</span> <span class="nt">-p</span> ~/bin
-<span class="nb">mv </span>eksctl ~/bin/
-<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$HOME</span>/bin:<span class="nv">$PATH</span>
-<span class="c"># Add to .bashrc so it's available in future sessions</span>
-<span class="nb">echo</span> <span class="s1">'export PATH=$HOME/bin:$PATH'</span> <span class="o">&gt;&gt;</span> ~/.bashrc
-eksctl version</code></pre>
-</div>
-</div>
-<div class="olist arabic">
-<ol class="arabic" start="2">
-<li>
-<p>Create the EKS cluster with a managed node group. Because eksctl requires a YAML config file (not CLI flags) to specify IAM roles, first create a cluster configuration file:</p>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash"><span class="nv">ACCOUNT_ID</span><span class="o">=</span><span class="si">$(</span>aws sts get-caller-identity <span class="nt">--query</span> Account <span class="nt">--output</span> text<span class="si">)</span>
+<pre class="rouge highlight"><code>#dev-dataflow | November 14
 
-<span class="nb">cat</span> <span class="o">&lt;&lt;</span><span class="no">EOF</span><span class="sh"> &gt; cluster-config.yaml
-apiVersion: eksctl.io/v1alpha5
-kind: ClusterConfig
-metadata:
-  name: lab2-cluster
-  region: us-east-1
-iam:
-  withOIDC: false
-  serviceRoleARN: arn:aws:iam::</span><span class="k">${</span><span class="nv">ACCOUNT_ID</span><span class="k">}</span><span class="sh">:role/LabEksClusterRole
-managedNodeGroups:
-  - name: data-nodes
-    instanceType: t3.medium
-    desiredCapacity: 2
-    iam:
-      instanceRoleARN: arn:aws:iam::</span><span class="k">${</span><span class="nv">ACCOUNT_ID</span><span class="k">}</span><span class="sh">:role/LabEksClusterRole
-EOF</span></code></pre>
+james.rodriguez: Anyone else getting pulled into the Lakeside ticket queue
+again? I've got three P1s assigned to me this morning.
+
+aisha.patel: Same here. Regional Health escalated something about report
+formatting. Apparently it's "urgent."
+
+david.kim: This is killing our sprint velocity. We committed to finishing
+the patient lookup API this week and I've lost James for two days already.
+
+marcus.williams: @sarah.chen can we get some air cover here? The legacy
+stuff can't keep bleeding into DataFlow resources.
+
+sarah.chen: I hear you all. Let me talk to David O about prioritization.
+In the meantime, we need to hit our sprint commitments.
+
+priya.sharma: Honest question - what ARE our sprint commitments? We skipped
+planning again last week because of the client fire drill.
+
+alex.chen: I've been working on three different features because I keep
+getting redirected. Not sure which one is actually priority.
+
+marcus.williams: The patient lookup API is the foundation for everything
+else. That should be #1.
+
+sarah.chen: Actually the mobile framework is what David specifically asked
+about in the steering committee. We should focus there.
+
+marcus.williams: The mobile app can't do anything without the APIs to call.
+We're building a house starting with the roof.
+
+sarah.chen: Let's take this offline.</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Then create the cluster:</p>
 </div>
+<div class="sect2">
+<h3 id="_artifact_f_2_email_thread_architecture_discussion">Artifact F-2: Email Thread — Architecture Discussion</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">eksctl create cluster <span class="nt">-f</span> cluster-config.yaml</code></pre>
+<pre class="rouge highlight"><code>From: Marcus Williams
+To: Sarah Chen
+CC: David Okonkwo
+Date: October 28, 2023
+Subject: RE: RE: RE: Architecture Concerns
+
+Sarah,
+
+I need to escalate this formally. We are making decisions about the cloud
+architecture that will lock us into patterns we can't easily change later.
+Specifically:
+
+1. The current approach doesn't account for the offline capability that
+   CR-014 requires. Retrofitting this later will mean rewriting significant
+   portions of the data sync layer.
+
+2. We're replicating the same tight coupling between modules that made the
+   legacy system so hard to maintain. I've raised this three times now.
+
+3. The cloud team is building services without understanding how the legacy
+   data model works. We're going to hit serious problems during migration.
+
+I'm not trying to slow things down. I'm trying to prevent us from building
+a system that has the same problems we're trying to escape.
+
+Can we schedule a proper architecture review before we go further?
+
+- Marcus
+
+---
+
+From: Sarah Chen
+To: Marcus Williams
+CC: David Okonkwo
+Date: October 28, 2023
+Subject: RE: RE: RE: RE: Architecture Concerns
+
+Marcus,
+
+I appreciate your perspective, but we need to keep moving. We can't afford
+to stop development for an extended architecture review at this point.
+We're already behind on the commitments we made to Regional Health.
+
+Let's find 30 minutes next week to discuss your top concern and see if
+there's a targeted solution.
+
+Sarah
+
+---
+
+From: David Okonkwo
+To: Sarah Chen; Marcus Williams
+Date: October 29, 2023
+Subject: RE: RE: RE: RE: RE: Architecture Concerns
+
+Team — I trust you both to work this out. Marcus, I value your experience
+with our systems. Sarah, I know you're managing a lot of competing
+priorities. Let's keep the momentum going while being thoughtful about
+technical decisions.
+
+The board is watching this project closely. We need to show progress.
+
+David</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>This takes approximately 15 minutes. The eksctl tool provisions the cluster, VPC networking, and node group. When complete, it automatically configures kubectl. The config file assigns <code>LabEksClusterRole</code> as both the cluster service role and the node instance role, which is required by the Learner Lab environment. OIDC is disabled because the Learner Lab does not grant the <code>iam:CreateOpenIDConnectProvider</code> permission, and it is not needed here — the pods inherit S3 access through the node instance role.</p>
 </div>
-<div class="admonitionblock caution">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-caution" title="Caution"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Two t3.medium nodes use 4 vCPU and count as 2 of your 9 allowed instances. If you have the Docker-build EC2 instance from Part 1 still in "Running" state, stop it first (EC2 &gt; Instances &gt; select &gt; Instance state &gt; Stop instance).</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="olist arabic">
-<ol class="arabic" start="3">
-<li>
-<p>Verify the cluster is accessible:</p>
-</li>
-</ol>
-</div>
+<div class="sect2">
+<h3 id="_artifact_f_3_qa_team_defect_report_email">Artifact F-3: QA Team Defect Report Email</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">kubectl get nodes
-<span class="c"># Should show 2 nodes with STATUS = Ready</span></code></pre>
+<pre class="rouge highlight"><code>From: Rachel Martinez (QA Lead)
+To: Sarah Chen
+CC: Marcus Williams, Development Team
+Date: December 1, 2023
+Subject: Critical Defects Marked Resolved But Not Fixed
+
+Sarah,
+
+I need to flag a recurring problem. In our regression testing this week,
+we found that 6 defects previously marked as "Resolved" in Jira are still
+present in the current build:
+
+- DF-234: Patient search returns duplicate records (marked resolved Oct 15)
+- DF-267: Session timeout not enforced on mobile (marked resolved Oct 22)
+- DF-289: Audit log missing for medication changes (marked resolved Nov 3)
+- DF-301: Date formatting inconsistent across modules (marked resolved Nov 8)
+- DF-315: API rate limiting not functioning (marked resolved Nov 15)
+- DF-328: Error messages expose internal system paths (marked resolved Nov 20)
+
+When I followed up with the developers, the responses varied:
+- "I thought someone else was handling that"
+- "The fix is in my local branch but I haven't pushed it"
+- "That was resolved in the old branch before we restructured"
+- "I marked it resolved because I understood the problem, not because I
+   fixed it"
+
+We also don't have consistent code review coverage. The authentication
+service has had thorough reviews. The patient scheduling module has had
+none that I can find.
+
+I'm concerned that we're accumulating technical debt faster than we're
+paying it down, and that our defect tracking isn't giving us an accurate
+picture of quality.
+
+Can we discuss this at the next team meeting?
+
+Rachel</code></pre>
 </div>
 </div>
-<div class="olist arabic">
-<ol class="arabic" start="4">
-<li>
-<p>If eksctl did not assign the correct IAM roles, you may need to update the aws-auth ConfigMap to allow the node role. Check the EKS console under your cluster &gt; Compute &gt; Node groups to verify nodes registered. If nodes show “Not Ready,” consult the instructor.</p>
-</li>
-<li>
-<p>Create a Kubernetes Job manifest file (cleaning-job.yaml). This job runs three pods in parallel, each processing a different monthly partition. Each pod pulls the container image from ECR:</p>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="yaml"><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">batch/v1</span>
-<span class="na">kind</span><span class="pi">:</span> <span class="s">Job</span>
-<span class="na">metadata</span><span class="pi">:</span>
-  <span class="na">name</span><span class="pi">:</span> <span class="s">trip-cleaning-batch</span>
-<span class="na">spec</span><span class="pi">:</span>
-  <span class="na">parallelism</span><span class="pi">:</span> <span class="m">3</span>
-  <span class="na">completions</span><span class="pi">:</span> <span class="m">3</span>
-  <span class="na">completionMode</span><span class="pi">:</span> <span class="s">Indexed</span>
-  <span class="na">template</span><span class="pi">:</span>
-    <span class="na">spec</span><span class="pi">:</span>
-      <span class="na">restartPolicy</span><span class="pi">:</span> <span class="s">Never</span>
-      <span class="na">containers</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">cleaner</span>
-          <span class="na">image</span><span class="pi">:</span> <span class="s">&lt;ACCOUNT_ID&gt;.dkr.ecr.us-east-1.amazonaws.com/trip-cleaner:latest</span>
-          <span class="na">command</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">/bin/sh"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">-c"</span><span class="pi">]</span>
-          <span class="na">args</span><span class="pi">:</span>
-            <span class="pi">-</span> <span class="pi">|</span>
-              <span class="s">month="$(printf "%02d" "$((JOB_COMPLETION_INDEX + 1))")"</span>
-              <span class="s">python clean_trips.py \</span>
-                <span class="s">--input "s3://dsba6190-yourname-lab2/raw/month=${month}/" \</span>
-                <span class="s">--output "s3://dsba6190-yourname-lab2/cleaned/month=${month}/"</span>
-          <span class="na">env</span><span class="pi">:</span>
-            <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">AWS_DEFAULT_REGION</span>
-              <span class="na">value</span><span class="pi">:</span> <span class="s">us-east-1</span>
-            <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">JOB_COMPLETION_INDEX</span>
-              <span class="na">valueFrom</span><span class="pi">:</span>
-                <span class="na">fieldRef</span><span class="pi">:</span>
-                  <span class="na">fieldPath</span><span class="pi">:</span> <span class="s">metadata.annotations['batch.kubernetes.io/job-completion-index']</span></code></pre>
+<hr>
 </div>
 </div>
-<div class="paragraph">
-<p>Replace <code>&lt;ACCOUNT_ID&gt;</code> and <code>dsba6190-yourname-lab2</code> with your values. This manifest uses the indexed-job annotation (<code>batch.kubernetes.io/job-completion-index</code>) and maps index 0&#8594;month 01, 1&#8594;02, and 2&#8594;03 in the container command.</p>
 </div>
-<div class="olist arabic">
-<ol class="arabic" start="6">
-<li>
-<p>Apply the manifest and monitor the job:</p>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">kubectl apply <span class="nt">-f</span> cleaning-job.yaml
-<span class="c"># Watch progress (updates every 5 seconds)</span>
-kubectl get <span class="nb">jobs</span> <span class="nt">--watch</span>
-<span class="c"># Once pods appear, check logs for a specific pod</span>
-kubectl get pods
-kubectl logs trip-cleaning-batch-0-xxxxx</code></pre>
-</div>
-</div>
-<div class="olist arabic">
-<ol class="arabic" start="7">
-<li>
-<p>Verify the output. Each pod should have written a cleaned Parquet file to its respective S3 prefix:</p>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">aws s3 <span class="nb">ls </span>s3://dsba6190-yourname-lab2/cleaned/ <span class="nt">--recursive</span>
-<span class="c"># Should show 3 Parquet files, one per month partition</span></code></pre>
-</div>
-</div>
-<div class="admonitionblock important artifact">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p><strong>Artifact Checkpoint (Part 2, Steps 6-7)</strong></p>
-</div>
-<div class="paragraph">
-<p>Before deleting the cluster, capture:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>one screenshot of <code>kubectl get jobs</code> showing all completions succeeded</p>
-</li>
-<li>
-<p>one screenshot (or terminal capture) of <code>aws s3 ls s3://dsba6190-yourname-lab2/cleaned/ --recursive</code> showing the monthly outputs</p>
-</li>
-</ul>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="olist arabic">
-<ol class="arabic" start="8">
-<li>
-<p>Delete the cluster to preserve your budget. This step is required whether or not you plan to continue to Part 3 in this session:</p>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">eksctl delete cluster <span class="nt">--name</span> lab2-cluster <span class="nt">--region</span> us-east-1
-<span class="c"># This takes ~5 minutes and removes the cluster, node group, and VPC resources</span></code></pre>
-</div>
-</div>
-<div class="admonitionblock caution">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-caution" title="Caution"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Do not skip this step. An idle EKS cluster with 2 t3.medium nodes costs approximately $3.50/hour and counts against your instance limits. The EKS cluster does not survive session ends — if the session timer expires, the underlying EC2 nodes are stopped but the orphaned cluster control plane may cause issues when you return.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_deliverables_2">Deliverables</h4>
-<div class="admonitionblock important artifact">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p><strong>Artifact Submission Required</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Kubernetes Job manifest (cleaning-job.yaml)</p>
-</li>
-<li>
-<p>Screenshot of kubectl get jobs showing all completions succeeded</p>
-</li>
-<li>
-<p>Screenshot of aws s3 ls showing cleaned Parquet files for each month partition</p>
-</li>
-</ul>
-</div>
-</td>
-</tr>
-</table>
-</div>
+<div class="sect1">
+<h2 id="_document_g_anonymous_team_survey_results">Document G: Anonymous Team Survey Results</h2>
+<div class="sectionbody">
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1619,794 +1272,712 @@ kubectl logs trip-cleaning-batch-0-xxxxx</code></pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p><strong>Stopping after Part 2</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Delete the EKS cluster (Step 8 above). Confirm deletion is complete before ending your session.</p>
-</li>
-<li>
-<p>If the EC2 instance from Part 1 is still running, stop it.</p>
-</li>
-<li>
-<p>Your cleaned Parquet files in s3://dsba6190-yourname-lab2/cleaned/ persist across sessions. Part 3 reads from this location.</p>
-</li>
-<li>
-<p>The PySpark script and zone lookup file you uploaded to S3 in Part 1, Step 2 are already in place for Part 3.</p>
-</li>
-<li>
-<p>You can safely end your Learner Lab session.</p>
-</li>
-</ul>
+<p>Survey conducted by HR at the request of the project sponsor. Response rate: 18 of 22 team members (82%). Selected verbatim comments included below.</p>
 </div>
 </td>
 </tr>
 </table>
-</div>
-</div>
 </div>
 <div class="sect2">
-<h3 id="_part_3_analytical_transformations_with_amazon_emr_spark">Part 3: Analytical Transformations with Amazon EMR (Spark)</h3>
-<div class="paragraph">
-<p><strong>Estimated time:</strong> 60–75 minutes (includes ~10 min cluster startup)</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p><strong>Starting Part 3 in a new session?</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Start your Learner Lab session and open the AWS Console.</p>
-</li>
-<li>
-<p>Verify your cleaned data from Part 2 is in S3: run aws s3 ls s3://dsba6190-yourname-lab2/cleaned/ --recursive in CloudShell. You should see 3 Parquet files.</p>
-</li>
-<li>
-<p>Verify your PySpark script and zone lookup are in S3: run aws s3 ls s3://dsba6190-yourname-lab2/scripts/ and aws s3 ls s3://dsba6190-yourname-lab2/reference/. (You uploaded these in Part 1, Step 2.)</p>
-</li>
-<li>
-<p>Confirm no leftover EC2 instances or EKS clusters are running: check EC2 &gt; Instances and EKS &gt; Clusters. Stop or delete any orphaned resources before proceeding.</p>
-</li>
-<li>
-<p>You are ready to create the EMR cluster below.</p>
-</li>
-</ul>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="sect3">
-<h4 id="_objectives_3">Objectives</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Launch an EMR cluster and run a PySpark job that reads the cleaned data from Parts 1–2 and produces analytical aggregations</p>
-</li>
-<li>
-<p>Use Spark SQL to compute metrics that would be impractical to calculate row-by-row: trip volume by zone and hour, rolling averages, and percentile distributions</p>
-</li>
-<li>
-<p>Write the results as partitioned Parquet optimized for downstream Athena queries</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_tasks_3">Tasks</h4>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Create an EMR cluster. Navigate to EMR &gt; Create cluster in the AWS Console and configure:</p>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="text">Cluster name: lab2-spark-cluster
-EMR release: emr-7.x.x (latest available)
-Application bundle: Spark (Interactive or Custom — ensure Spark is selected)
-Cluster configuration: Instance groups
-Primary: m4.large (1 instance)
-Core: m4.large (1 instance)
-Task: m4.large (1 instance)
-Cluster logs: UNCHECK "Publish cluster-specific logs to Amazon S3"
-(This avoids S3 bucket creation permission errors)
-EC2 key pair: vockey
-IAM roles:
-Amazon EMR service role: EMR_DefaultRole
-EC2 instance profile for EMR: EMR_EC2_DefaultRole</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Choose Create cluster. The cluster takes approximately 8–12 minutes to reach "Waiting" state. Monitor progress on the cluster detail page.</p>
-</div>
-<div class="admonitionblock caution">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-caution" title="Caution"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>These 3 EMR instances count toward your 9-instance limit. Verify no other EC2 instances are running (EC2 &gt; Instances). If the Docker-build instance from Part 1 is still in "Running" state, stop it first.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="olist arabic">
-<ol class="arabic" start="2">
-<li>
-<p>Add a Spark step to the cluster. Once the cluster shows "Waiting," choose the Steps tab, then Add step:</p>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="text">Step type: Spark application
-Name: trip-aggregations
-Deploy mode: Cluster
-Application location: s3://dsba6190-yourname-lab2/scripts/spark_aggregations.py
-Arguments:
---input s3://dsba6190-yourname-lab2/cleaned/
---zones s3://dsba6190-yourname-lab2/reference/zone_lookup.csv
---output s3://dsba6190-yourname-lab2/aggregated/
-Action on failure: Continue</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Choose Add step. The step will show "Pending" then "Running." Monitor it until it shows "Completed" (typically 5–10 minutes depending on data volume).</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic" start="3">
-<li>
-<p>If the step fails, check the stderr log. In the Steps tab, choose the step name, then View logs &gt; stderr. Common issues include S3 path typos and Python import errors. Fix the script, re-upload to S3, and resubmit the step.</p>
-</li>
-<li>
-<p>Verify the output. Check that both output tables exist with the expected partition structure:</p>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash"><span class="c"># Hourly aggregation (not partitioned — single directory)</span>
-aws s3 <span class="nb">ls </span>s3://dsba6190-yourname-lab2/aggregated/hourly/
-<span class="c"># Daily summary (partitioned by date)</span>
-aws s3 <span class="nb">ls </span>s3://dsba6190-yourname-lab2/aggregated/daily_summary/
-<span class="c"># Should show prefixes like date=2023-01-01/, date=2023-01-02/, etc.</span></code></pre>
-</div>
-</div>
-<div class="admonitionblock important artifact">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p><strong>Artifact Checkpoint (Part 3, Steps 2 and 4)</strong></p>
-</div>
-<div class="paragraph">
-<p>Before terminating the EMR cluster, capture:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>a screenshot of the EMR step status as <code>Completed</code></p>
-</li>
-<li>
-<p>a screenshot of the S3 aggregated output listing showing both <code>hourly/</code> and <code>daily_summary/</code></p>
-</li>
-</ul>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="olist arabic">
-<ol class="arabic" start="5">
-<li>
-<p>Terminate the EMR cluster. In the EMR console, select the cluster and choose Terminate. Wait for the cluster status to change to "Terminated" before ending your session:</p>
-</li>
-</ol>
-</div>
-<div class="admonitionblock caution">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-caution" title="Caution"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>EMR clusters do not survive session ends. If the session timer expires with the cluster running, the EC2 instances will be force-stopped, which corrupts the cluster and may leave orphaned resources. Always terminate EMR clusters explicitly and verify your Spark output is in S3 before ending your session.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_deliverables_3">Deliverables</h4>
-<div class="admonitionblock important artifact">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p><strong>Artifact Submission Required</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>PySpark script (spark_aggregations.py)</p>
-</li>
-<li>
-<p>Screenshot of the EMR step showing "Completed" status</p>
-</li>
-<li>
-<p>Screenshot of the S3 output directory showing the hourly and daily_summary tables with partitioned Parquet files</p>
-</li>
-</ul>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p><strong>Stopping after Part 3</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Terminate the EMR cluster (Step 5 above). Wait for "Terminated" status in the EMR console.</p>
-</li>
-<li>
-<p>Verify no other EC2 instances are running.</p>
-</li>
-<li>
-<p>Your aggregated output in s3://dsba6190-yourname-lab2/aggregated/ persists across sessions. Part 4 reads from this location.</p>
-</li>
-<li>
-<p>You can safely end your Learner Lab session.</p>
-</li>
-</ul>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div style="page-break-after: always;"></div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_part_4_building_an_analytics_query_layer_with_athena">Part 4: Building an Analytics Query Layer with Athena</h3>
-<div class="paragraph">
-<p><strong>Estimated time:</strong> 30–45 minutes</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p><strong>Starting Part 4 in a new session?</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Start your Learner Lab session and open the AWS Console.</p>
-</li>
-<li>
-<p>Verify your Spark output from Part 3 is in S3: run aws s3 ls s3://dsba6190-yourname-lab2/aggregated/ --recursive in CloudShell. You should see Parquet files under both hourly/ and daily_summary/ prefixes.</p>
-</li>
-<li>
-<p>No compute resources need to be running for Part 4. Athena and Glue are serverless—you only need the S3 data.</p>
-</li>
-<li>
-<p>Navigate to Athena in the console to begin.</p>
-</li>
-</ul>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="sect3">
-<h4 id="_objectives_4">Objectives</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Create Glue Data Catalog tables over the Spark output so analysts can discover and query the data using standard SQL</p>
-</li>
-<li>
-<p>Run analytical queries in Athena that answer specific business questions about the dataset</p>
-</li>
-<li>
-<p>Evaluate when serverless SQL (Athena) is the right tool versus when you need a persistent compute cluster (EMR)</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_tasks_4">Tasks</h4>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Configure Athena’s query result location. Navigate to Athena in the console. If this is your first time opening Athena, you will see a banner asking you to set up a query result location. Choose Settings (gear icon in the top right), then Manage:</p>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="text">Query result location: s3://dsba6190-yourname-lab2/athena-results/
-Expected bucket owner: (leave blank)</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Choose Save. This tells Athena where to store query output files.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic" start="2">
-<li>
-<p>Create a Glue database to organize your tables. In the Athena query editor, run:</p>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="sql"><span class="k">CREATE</span> <span class="k">DATABASE</span> <span class="n">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">lab2_analytics</span><span class="p">;</span></code></pre>
-</div>
-</div>
-<div class="olist arabic">
-<ol class="arabic" start="3">
-<li>
-<p>Create an external table for the hourly aggregation. This DDL maps the Parquet files from Part 3 to a SQL-queryable table. Adjust the column names and types to match your Spark output schema:</p>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="sql"><span class="k">CREATE</span> <span class="k">EXTERNAL</span> <span class="k">TABLE</span> <span class="n">lab2_analytics</span><span class="p">.</span><span class="n">hourly_trips</span> <span class="p">(</span>
-<span class="n">pickup_zone</span> <span class="n">STRING</span><span class="p">,</span>
-<span class="n">hour_of_day</span> <span class="nb">INT</span><span class="p">,</span>
-<span class="n">trip_count</span> <span class="nb">BIGINT</span><span class="p">,</span>
-<span class="n">avg_fare</span> <span class="nb">DOUBLE</span><span class="p">,</span>
-<span class="n">avg_duration_min</span> <span class="nb">DOUBLE</span><span class="p">,</span>
-<span class="n">p90_fare</span> <span class="nb">DOUBLE</span>
-<span class="p">)</span>
-<span class="n">STORED</span> <span class="k">AS</span> <span class="n">PARQUET</span>
-<span class="k">LOCATION</span> <span class="s1">'s3://dsba6190-yourname-lab2/aggregated/hourly/'</span>
-<span class="n">TBLPROPERTIES</span> <span class="p">(</span><span class="s1">'classification'</span><span class="o">=</span><span class="s1">'parquet'</span><span class="p">);</span></code></pre>
-</div>
-</div>
-<div class="olist arabic">
-<ol class="arabic" start="4">
-<li>
-<p>Create an external table for the daily summary. Since this table is partitioned by date, include the PARTITIONED BY clause and then load partition metadata:</p>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="sql"><span class="k">CREATE</span> <span class="k">EXTERNAL</span> <span class="k">TABLE</span> <span class="n">lab2_analytics</span><span class="p">.</span><span class="n">daily_summary</span> <span class="p">(</span>
-<span class="n">pickup_zone</span> <span class="n">STRING</span><span class="p">,</span>
-<span class="n">total_revenue</span> <span class="nb">DOUBLE</span><span class="p">,</span>
-<span class="n">trip_volume</span> <span class="nb">BIGINT</span>
-<span class="p">)</span>
-<span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="nb">date</span> <span class="n">STRING</span><span class="p">)</span>
-<span class="n">STORED</span> <span class="k">AS</span> <span class="n">PARQUET</span>
-<span class="k">LOCATION</span> <span class="s1">'s3://dsba6190-yourname-lab2/aggregated/daily_summary/'</span>
-<span class="n">TBLPROPERTIES</span> <span class="p">(</span><span class="s1">'classification'</span><span class="o">=</span><span class="s1">'parquet'</span><span class="p">);</span>
-<span class="c1">-- Load all partition metadata</span>
-<span class="n">MSCK</span> <span class="n">REPAIR</span> <span class="k">TABLE</span> <span class="n">lab2_analytics</span><span class="p">.</span><span class="n">daily_summary</span><span class="p">;</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>After running MSCK REPAIR TABLE, Athena will scan the S3 prefixes and register each date=YYYY-MM-DD/ folder as a partition. You can verify by running SHOW PARTITIONS lab2_analytics.daily_summary;</p>
-</div>
-<div class="admonitionblock important artifact">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p><strong>Artifact Checkpoint (Part 4, Steps 2-4)</strong></p>
-</div>
-<div class="paragraph">
-<p>Save the exact DDL statements you ran for both external tables (<code>hourly_trips</code> and <code>daily_summary</code>). Submit these statements as text in your artifact package.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="olist arabic">
-<ol class="arabic" start="5">
-<li>
-<p>Run three analytical queries. For each query, note the "Data scanned" and "Run time" metrics shown at the bottom of the results panel in Athena:</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p><strong>Query A — Top zones by volume:</strong></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="sql"><span class="k">SELECT</span> <span class="n">pickup_zone</span><span class="p">,</span> <span class="k">SUM</span><span class="p">(</span><span class="n">trip_count</span><span class="p">)</span> <span class="k">AS</span> <span class="n">total_trips</span>
-<span class="k">FROM</span> <span class="n">lab2_analytics</span><span class="p">.</span><span class="n">hourly_trips</span>
-<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">pickup_zone</span>
-<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">total_trips</span> <span class="k">DESC</span>
-<span class="k">LIMIT</span> <span class="mi">10</span><span class="p">;</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p><strong>Query B — Average fare by hour (peak pricing analysis):</strong></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="sql"><span class="k">SELECT</span> <span class="n">hour_of_day</span><span class="p">,</span> <span class="n">ROUND</span><span class="p">(</span><span class="k">AVG</span><span class="p">(</span><span class="n">avg_fare</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span> <span class="k">AS</span> <span class="n">mean_fare</span>
-<span class="k">FROM</span> <span class="n">lab2_analytics</span><span class="p">.</span><span class="n">hourly_trips</span>
-<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">hour_of_day</span>
-<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">hour_of_day</span><span class="p">;</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p><strong>Query C — Date-filtered query demonstrating partition pruning:</strong></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="sql"><span class="c1">-- Run this first WITHOUT a date filter and note Data Scanned:</span>
-<span class="k">SELECT</span> <span class="n">pickup_zone</span><span class="p">,</span> <span class="k">SUM</span><span class="p">(</span><span class="n">total_revenue</span><span class="p">)</span> <span class="k">AS</span> <span class="n">revenue</span>
-<span class="k">FROM</span> <span class="n">lab2_analytics</span><span class="p">.</span><span class="n">daily_summary</span>
-<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">pickup_zone</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">revenue</span> <span class="k">DESC</span> <span class="k">LIMIT</span> <span class="mi">5</span><span class="p">;</span>
-<span class="c1">-- Then run WITH a date filter and compare Data Scanned:</span>
-<span class="k">SELECT</span> <span class="n">pickup_zone</span><span class="p">,</span> <span class="k">SUM</span><span class="p">(</span><span class="n">total_revenue</span><span class="p">)</span> <span class="k">AS</span> <span class="n">revenue</span>
-<span class="k">FROM</span> <span class="n">lab2_analytics</span><span class="p">.</span><span class="n">daily_summary</span>
-<span class="k">WHERE</span> <span class="nb">date</span> <span class="o">=</span> <span class="s1">'2023-01-15'</span>
-<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">pickup_zone</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">revenue</span> <span class="k">DESC</span> <span class="k">LIMIT</span> <span class="mi">5</span><span class="p">;</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The filtered query should scan significantly less data because Athena only reads the Parquet files in the matching partition folder. This is the practical benefit of the partitioning you set up in the Spark job.</p>
-</div>
-<div class="admonitionblock important artifact">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p><strong>Artifact Checkpoint (Part 4, Step 5)</strong></p>
-</div>
-<div class="paragraph">
-<p>For each query (A, B, and C), capture a screenshot that includes both the query results and Athena&#8217;s <code>Data scanned</code> and <code>Run time</code> metrics.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="olist arabic">
-<ol class="arabic" start="6">
-<li>
-<p>Write an analysis (8–12 sentences) addressing three things: (a) what the query results reveal about trip patterns in the dataset (which zones are busiest, when fares peak, how revenue distributes across zones); (b) how Parquet columnar storage and partitioning affected query performance based on the data-scanned metrics you recorded; (c) when a data team should choose Athena for ad-hoc exploration versus standing up an EMR cluster for heavier processing, with specific examples from this lab.</p>
-</li>
-</ol>
-</div>
-<div class="admonitionblock important artifact">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p><strong>Artifact Checkpoint (Part 4, Step 6)</strong></p>
-</div>
-<div class="paragraph">
-<p>Write and save your 8–12 sentence analysis now so it can be submitted with the screenshots and DDL artifacts.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_deliverables_4">Deliverables</h4>
-<div class="admonitionblock important artifact">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p><strong>Artifact Submission Required</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>DDL statements for both external tables</p>
-</li>
-<li>
-<p>Screenshots of each analytical query with results, showing the Data Scanned and Run Time metrics</p>
-</li>
-<li>
-<p>Written analysis of trip patterns, partition pruning impact, and Athena vs. EMR tradeoffs</p>
-</li>
-</ul>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div style="page-break-after: always;"></div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_part_5_submission">Part 5: Submission</h3>
-<div class="paragraph">
-<p>Collect all artifacts from Parts 1–4 into a single submission package. Organize the files using the folder structure below, then compress the folder into a ZIP archive and upload it to Canvas.</p>
-</div>
-<div class="sect3">
-<h4 id="_submission_structure">Submission Structure</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="text">lab2-submission-&lt;lastname&gt;/
-├── part1/
-│   ├── Dockerfile
-│   ├── clean_trips.py
-│   ├── screenshot-docker-run-output.png
-│   └── screenshot-ecr-repository.png
-├── part2/
-│   ├── cleaning-job.yaml
-│   ├── screenshot-kubectl-get-jobs.png
-│   └── screenshot-s3-cleaned-parquet.png
-├── part3/
-│   ├── spark_aggregations.py
-│   ├── screenshot-emr-step-completed.png
-│   └── screenshot-s3-aggregated-output.png
-├── part4/
-│   ├── ddl-statements.sql
-│   ├── screenshot-query-a-top-zones.png
-│   ├── screenshot-query-b-fare-by-hour.png
-│   ├── screenshot-query-c-partition-pruning.png
-│   └── analysis.txt
-└── README.txt</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_artifact_checklist">Artifact Checklist</h4>
-<div class="paragraph">
-<p>Verify every item is present before submitting.</p>
-</div>
-<div class="paragraph">
-<p><strong>Part 1 — Docker Data Cleaning Pipeline (4 items)</strong></p>
-</div>
-<div class="ulist checklist">
-<ul class="checklist">
-<li>
-<p><input type="checkbox" data-item-complete="0"> <code>Dockerfile</code> — the Dockerfile you created in Step 6</p>
-</li>
-<li>
-<p><input type="checkbox" data-item-complete="0"> <code>clean_trips.py</code> — the cleaning script</p>
-</li>
-<li>
-<p><input type="checkbox" data-item-complete="0"> <code>screenshot-docker-run-output.png</code> — terminal output from <code>docker run</code> showing input row count, rows filtered by each rule, and final output row count</p>
-</li>
-<li>
-<p><input type="checkbox" data-item-complete="0"> <code>screenshot-ecr-repository.png</code> — ECR console showing the <code>trip-cleaner</code> repository with the <code>latest</code> image tag, size, and push date</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><strong>Part 2 — EKS Parallel Processing (3 items)</strong></p>
-</div>
-<div class="ulist checklist">
-<ul class="checklist">
-<li>
-<p><input type="checkbox" data-item-complete="0"> <code>cleaning-job.yaml</code> — the Kubernetes Job manifest</p>
-</li>
-<li>
-<p><input type="checkbox" data-item-complete="0"> <code>screenshot-kubectl-get-jobs.png</code> — output of <code>kubectl get jobs</code> showing all 3 completions succeeded</p>
-</li>
-<li>
-<p><input type="checkbox" data-item-complete="0"> <code>screenshot-s3-cleaned-parquet.png</code> — output of <code>aws s3 ls &#8230;&#8203;cleaned/ --recursive</code> showing one Parquet file per month partition</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><strong>Part 3 — Spark Analytical Transformations (3 items)</strong></p>
-</div>
-<div class="ulist checklist">
-<ul class="checklist">
-<li>
-<p><input type="checkbox" data-item-complete="0"> <code>spark_aggregations.py</code> — the PySpark script</p>
-</li>
-<li>
-<p><input type="checkbox" data-item-complete="0"> <code>screenshot-emr-step-completed.png</code> — EMR Steps tab showing the <code>trip-aggregations</code> step with "Completed" status</p>
-</li>
-<li>
-<p><input type="checkbox" data-item-complete="0"> <code>screenshot-s3-aggregated-output.png</code> — S3 listing showing both <code>hourly/</code> and <code>daily_summary/</code> prefixes with Parquet files</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><strong>Part 4 — Athena Query Layer &amp; Analysis (5 items)</strong></p>
-</div>
-<div class="ulist checklist">
-<ul class="checklist">
-<li>
-<p><input type="checkbox" data-item-complete="0"> <code>ddl-statements.sql</code> — the exact CREATE EXTERNAL TABLE statements for both <code>hourly_trips</code> and <code>daily_summary</code>, including the MSCK REPAIR TABLE command</p>
-</li>
-<li>
-<p><input type="checkbox" data-item-complete="0"> <code>screenshot-query-a-top-zones.png</code> — Query A results with Data Scanned and Run Time visible</p>
-</li>
-<li>
-<p><input type="checkbox" data-item-complete="0"> <code>screenshot-query-b-fare-by-hour.png</code> — Query B results with Data Scanned and Run Time visible</p>
-</li>
-<li>
-<p><input type="checkbox" data-item-complete="0"> <code>screenshot-query-c-partition-pruning.png</code> — both Query C runs (with and without the date filter) showing the difference in Data Scanned</p>
-</li>
-<li>
-<p><input type="checkbox" data-item-complete="0"> <code>analysis.txt</code> — your 8–12 sentence written analysis covering trip patterns, partition pruning impact, and Athena vs. EMR tradeoffs</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_readme">README</h4>
-<div class="paragraph">
-<p>Include a plain-text <code>README.txt</code> at the root of your submission folder with:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Your full name and student ID</p>
-</li>
-<li>
-<p>The S3 bucket name you used throughout the lab</p>
-</li>
-<li>
-<p>Any issues encountered and how you resolved them (2–3 sentences per issue, or "No issues encountered")</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_submission_instructions">Submission Instructions</h4>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Create the folder structure shown above on your local machine.</p>
-</li>
-<li>
-<p>Copy or move each artifact into the correct subfolder. Rename screenshots to match the names in the checklist so graders can locate them quickly.</p>
-</li>
-<li>
-<p>For <code>ddl-statements.sql</code>, paste the exact SQL you ran in the Athena query editor (both CREATE TABLE statements and the MSCK REPAIR TABLE command). For <code>analysis.txt</code>, paste your written analysis from Part 4, Step 6.</p>
-</li>
-<li>
-<p>Compress the top-level folder into a ZIP archive: <code>lab2-submission-&lt;lastname&gt;.zip</code></p>
-</li>
-<li>
-<p>Upload the ZIP to the <strong>Lab 2</strong> assignment on Canvas before the deadline.</p>
-</li>
-</ol>
-</div>
-<div class="admonitionblock caution">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-caution" title="Caution"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Screenshots must be legible. If text in a screenshot is too small to read, crop or zoom in on the relevant portion and re-capture. Illegible screenshots will receive partial or no credit.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_final_cleanup">Final Cleanup</h3>
-<div class="paragraph">
-<p>After completing Part 4, verify that all compute resources have been cleaned up. S3 data, Glue databases, and Athena tables can remain—they incur no ongoing compute cost.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>EKS cluster deleted (Part 2, Step 8)</p>
-</li>
-<li>
-<p>EMR cluster terminated (Part 3, Step 5)</p>
-</li>
-<li>
-<p>Docker-build EC2 instance stopped or terminated (Part 1)</p>
-</li>
-<li>
-<p>No SageMaker notebooks or endpoints running</p>
-</li>
-<li>
-<p>S3 data, ECR images, Glue databases, and Athena workgroups can remain (no compute cost)</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_grading_rubric_75_points">Grading Rubric (75 points)</h3>
+<h3 id="_quantitative_results">Quantitative Results</h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 56%;">
-<col style="width: 22%;">
-<col style="width: 22%;">
+<col style="width: 44.4444%;">
+<col style="width: 11.1111%;">
+<col style="width: 11.1111%;">
+<col style="width: 11.1111%;">
+<col style="width: 11.1111%;">
+<col style="width: 11.1112%;">
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top"><strong>Component</strong></th>
-<th class="tableblock halign-left valign-top"><strong>Points</strong></th>
-<th class="tableblock halign-left valign-top"><strong>Weight</strong></th>
+<th class="tableblock halign-left valign-top">Statement</th>
+<th class="tableblock halign-left valign-top">Strongly Disagree</th>
+<th class="tableblock halign-left valign-top">Disagree</th>
+<th class="tableblock halign-left valign-top">Neutral</th>
+<th class="tableblock halign-left valign-top">Agree</th>
+<th class="tableblock halign-left valign-top">Strongly Agree</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Part 1: Docker Data Cleaning Pipeline</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">15</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">20%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">I understand the project&#8217;s priorities</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Part 2: EKS Parallel Processing</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">15</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">20%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">I have the resources I need to do my job effectively</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Part 3: Spark Analytical Transformations</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">25</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">33%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Communication on this project is effective</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Part 4: Athena Query Layer &amp; Analysis</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">20</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">27%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">I feel my concerns are heard and addressed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Total</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>75</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>100%</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">I am confident this project will succeed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="sect2">
+<h3 id="_selected_verbatim_comments">Selected Verbatim Comments</h3>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>"I&#8217;ve been here 11 years. I know this system inside and out. Now I&#8217;m being told my knowledge is 'legacy thinking' and we need to 'move fast.' But I&#8217;m also the one they call at 2am when something breaks. Pick one."</p>
+</div>
+</blockquote>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>"Last sprint we touched 14 different user stories. Finished maybe 3 of them. This sprint looks the same. We&#8217;re spreading ourselves so thin that nothing actually gets done."</p>
+</div>
+</blockquote>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>"I genuinely don&#8217;t know who to escalate to when I hit a blocker. Sarah says one thing, Marcus says another, and half the time David just makes a decision directly with a developer anyway."</p>
+</div>
+</blockquote>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>"The cloud infrastructure is really well designed. If we could just focus on building it instead of constantly firefighting, we could make real progress."</p>
+</div>
+</blockquote>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>"We&#8217;re building the exact same tightly-coupled mess we have now, just in newer technology. Nobody wants to hear it."</p>
+</div>
+</blockquote>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>"I worry about what happens to my job when this migration is done. Nobody&#8217;s talking about it but everyone&#8217;s thinking about it."</p>
+</div>
+</blockquote>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>"The testing process is a joke. We find bugs, report them, they get marked fixed, and then we find the same bugs a month later. Nobody&#8217;s actually checking that fixes work."</p>
+</div>
+</blockquote>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>"Operations wasn&#8217;t included in any of the planning. Now we&#8217;re expected to support a system we don&#8217;t understand, using tools we&#8217;ve never used, with no training budget."</p>
+</div>
+</blockquote>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_document_h_client_communications">Document H: Client Communications</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_h_1_email_from_regional_health_partners">H-1: Email from Regional Health Partners</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>From: Dr. Patricia Vance, CMO, Regional Health Partners
+To: David Okonkwo
+Date: November 28, 2023
+Subject: Board Presentation Follow-up
+
+David,
+
+I wanted to follow up on our conversation last month. As you know, I
+presented to our board in October about the mobile access capabilities
+we discussed for Q3. They were enthusiastic, and we've begun planning
+our clinical workflow changes around the assumption that physicians
+will have mobile access to patient records by March.
+
+I haven't been able to get a clear status update from your team. When
+I ask Sarah, she mentions technical dependencies. When I ask Marcus,
+he talks about architecture concerns. I've now received two calls from
+competitors offering demonstrations of their mobile platforms.
+
+Regional Health has been a MedTech client for eight years. I've
+championed your system internally because I believed in the partnership.
+But I'm running out of ways to explain to my board why the features we
+were promised keep slipping.
+
+Can we schedule a call this week? I need to understand where we actually
+stand.
+
+Patricia
+
+---
+
+From: David Okonkwo
+To: Dr. Patricia Vance
+Date: November 28, 2023
+Subject: RE: Board Presentation Follow-up
+
+Patricia,
+
+Thank you for your patience and your continued partnership. You're
+absolutely right that we owe you better communication.
+
+I'm confident we'll have mobile capabilities ready for your physicians
+by Q1. Let me set up a call for Thursday to walk through the roadmap
+and address your board's concerns directly.
+
+I value our relationship and I'm committed to making this work.
+
+David</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_h_2_email_from_lakeside_medical_center">H-2: Email from Lakeside Medical Center</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>From: Kevin Walsh, IT Director, Lakeside Medical Center
+To: Sarah Chen
+CC: Account Manager
+Date: December 12, 2023
+Subject: FHIR Integration Timeline
+
+Sarah,
+
+We're four months into what was supposed to be a six-month integration
+timeline for our custom FHIR interface. I haven't seen any working code
+yet, and the last two scheduled demos were cancelled.
+
+Our state reporting deadline is July 1. We chose MedTech specifically
+because we were told you could deliver this integration. If we can't
+meet the state deadline, we're looking at compliance penalties and
+potential loss of Medicaid reimbursement eligibility.
+
+I need a realistic timeline and a named technical contact who can speak
+to the integration details. Please advise by end of week.
+
+Kevin Walsh</code></pre>
+</div>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_document_i_financial_summary_month_6">Document I: Financial Summary (Month 6)</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_budget_vs_actual_spending">Budget vs. Actual Spending</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 22.2222%;">
+<col style="width: 22.2222%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Category</th>
+<th class="tableblock halign-left valign-top">Original Budget</th>
+<th class="tableblock halign-left valign-top">Spent to Date</th>
+<th class="tableblock halign-left valign-top">Variance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Personnel (Internal)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">$2,400,000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">$1,150,000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">($50,000) over</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Contractors</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">$0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">$210,000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">$210,000 over (unbudgeted)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cloud Infrastructure</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">$270,000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">$189,000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">$63,000 over (at current rate)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Software Licenses</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">$180,000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">$95,000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">On track</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Training</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">$150,000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">$12,000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Underspent</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hardware/Equipment</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">$200,000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">$85,000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">On track</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Contingency</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">$400,000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">$359,000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Largely consumed</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Travel/Miscellaneous</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">$100,000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">$0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">On track</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>TOTAL</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>$4,200,000</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>$2,100,000</strong></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_key_financial_observations">Key Financial Observations</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>50% of budget consumed at approximately 25% functional completion</p>
+</li>
+<li>
+<p>Contingency reserve nearly exhausted primarily due to unplanned contractor costs</p>
+</li>
+<li>
+<p>Cloud infrastructure running 40% over monthly estimate ($21,000 vs. $15,000)</p>
+</li>
+<li>
+<p>Training budget underspent, correlating with ops team concerns about lack of preparation</p>
+</li>
+<li>
+<p>No earned value metrics being tracked; these figures reconstructed from accounting system</p>
+</li>
+</ul>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_document_j_compliance_and_regulatory_context">Document J: Compliance and Regulatory Context</h2>
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>MedTech Solutions operates in a regulated healthcare environment. These constraints affect project decisions and timelines.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_relevant_regulatory_requirements">Relevant Regulatory Requirements</h3>
+<div class="paragraph">
+<p><strong>HIPAA Security Rule:</strong> All systems handling protected health information (PHI) must implement administrative, physical, and technical safeguards. Cloud migration requires updated Business Associate Agreements with all cloud vendors and documented security controls.</p>
+</div>
+<div class="paragraph">
+<p><strong>State Reporting Mandates:</strong> Several client states require standardized electronic reporting formats by specific deadlines:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>North Carolina: July 1, 2024 — HL7 FHIR-based quality reporting</p>
+</li>
+<li>
+<p>Virginia: October 1, 2024 — Updated immunization registry format</p>
+</li>
+<li>
+<p>Georgia: January 1, 2025 — Prescription drug monitoring integration</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Meaningful Use / Promoting Interoperability:</strong> Clients face financial penalties if their EHR systems don&#8217;t meet federal interoperability standards. MedTech&#8217;s current certification expires in 14 months and must be renewed with the new platform.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_scheduled_audit">Scheduled Audit</h3>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>MedTech&#8217;s annual HIPAA security audit is scheduled for Month 10 (four months from current assessment). The audit scope includes any systems handling PHI, which will include DataFlow components if any are in production use by that date.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_document_k_decision_point">Document K: Decision Point</h2>
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The CTO has requested your analysis to inform a decision at next month&#8217;s board meeting. He is weighing three options and wants your assessment of each, along with your recommendation.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_option_a_stabilization_pause">Option A: Stabilization Pause</h3>
+<div class="paragraph">
+<p>Pause all new feature development for 6-8 weeks. During this period:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Conduct comprehensive scope review and create proper WBS</p>
+</li>
+<li>
+<p>Perform architecture review and address Marcus&#8217;s technical concerns</p>
+</li>
+<li>
+<p>Establish formal change control process</p>
+</li>
+<li>
+<p>Reset client expectations with revised, realistic timelines</p>
+</li>
+<li>
+<p>Complete training for operations team</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Potential concerns:</strong> Client relationships may suffer from perceived delays. Competitors may gain ground. Board may view pause as admission of failure.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_option_b_scope_reduction">Option B: Scope Reduction</h3>
+<div class="paragraph">
+<p>Reduce scope to core functionality only, targeting delivery in 12 months instead of 18:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Mobile access limited to view-only (no data entry)</p>
+</li>
+<li>
+<p>Custom integrations (Lakeside, Regional Health) moved to Phase 2</p>
+</li>
+<li>
+<p>Analytics capabilities deferred</p>
+</li>
+<li>
+<p>Focus on feature parity with legacy system plus cloud hosting benefits</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Potential concerns:</strong> Promised features won&#8217;t be delivered. May lose Lakeside account. Regional Health relationship at risk.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_option_c_accelerated_delivery">Option C: Accelerated Delivery</h3>
+<div class="paragraph">
+<p>Bring in external systems integrator to accelerate delivery while internal team stabilizes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>SI provides additional 8-10 experienced cloud developers</p>
+</li>
+<li>
+<p>Internal team focuses on legacy expertise and client relationships</p>
+</li>
+<li>
+<p>Target original 18-month timeline with expanded scope</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Potential concerns:</strong> Significant additional cost ($1.5-2M estimate). Integration challenges with external team. Knowledge transfer requirements.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_your_task">Your Task</h3>
+<div class="paragraph">
+<p>Your recovery recommendations (Part 3 of the case analysis) should address these options. You may recommend one of these approaches, a hybrid, or an alternative you believe is superior. Your recommendation must be grounded in your diagnostic assessment, supported by evidence from these documents, and justified using both traditional project management principles and Phoenix Project concepts.</p>
+</div>
+<hr>
+<h1 id="_part_three_reference_materials" class="discrete">Part Three: Reference Materials</h1>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_earned_value_formulas">Earned Value Formulas</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For your cost management analysis, you may find these formulas useful:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 37.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Metric</th>
+<th class="tableblock halign-left valign-top">Formula</th>
+<th class="tableblock halign-left valign-top">Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Planned Value (PV)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Budgeted cost of work scheduled</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">What we planned to spend by now</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Earned Value (EV)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Budgeted cost of work performed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value of work actually completed</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Actual Cost (AC)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Actual cost of work performed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">What we actually spent</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cost Variance (CV)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EV - AC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Positive = under budget</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Schedule Variance (SV)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EV - PV</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Positive = ahead of schedule</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cost Performance Index (CPI)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EV / AC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&gt;1 = under budget</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Schedule Performance Index (SPI)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EV / PV</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&gt;1 = ahead of schedule</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Estimate at Completion (EAC)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BAC / CPI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Projected total cost (if current performance continues)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Estimate to Complete (ETC)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EAC - AC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Projected cost to finish</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Variance at Completion (VAC)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BAC - EAC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Projected budget variance at end</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Budget at Completion (BAC):</strong> $4,200,000</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_work_breakdown_structure_components">Work Breakdown Structure Components</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A properly constructed WBS for this project might include these major categories:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Project Management</p>
+</li>
+<li>
+<p>Architecture &amp; Design</p>
+</li>
+<li>
+<p>Core Platform Development</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Authentication Services</p>
+</li>
+<li>
+<p>Patient Management APIs</p>
+</li>
+<li>
+<p>Clinical Documentation</p>
+</li>
+<li>
+<p>Order Management</p>
+</li>
+<li>
+<p>Reporting Engine</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Mobile Application</p>
+</li>
+<li>
+<p>Legacy Data Migration</p>
+</li>
+<li>
+<p>Integration Interfaces</p>
+</li>
+<li>
+<p>Testing &amp; Quality Assurance</p>
+</li>
+<li>
+<p>Deployment &amp; Operations</p>
+</li>
+<li>
+<p>Training &amp; Documentation</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_four_types_of_work_phoenix_project_reference">The Four Types of Work (Phoenix Project Reference)</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Business Projects</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Work that directly supports business initiatives and has clear business sponsorship</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IT Projects</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Infrastructure and technology improvements initiated by IT</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Changes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Updates to existing systems, often generated from business or IT projects</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unplanned Work</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Recovery work, firefighting, emergency fixes — work that displaces planned work</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_three_ways_phoenix_project_reference">The Three Ways (Phoenix Project Reference)</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 42.8571%;">
+<col style="width: 42.8572%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Way</th>
+<th class="tableblock halign-left valign-top">Principle</th>
+<th class="tableblock halign-left valign-top">Application</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">First Way</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Flow</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optimize the flow of work from left to right (development to operations to customer). Make work visible, reduce batch sizes, reduce handoffs, identify and elevate constraints.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Second Way</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Feedback</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create fast feedback loops from right to left. Amplify feedback to prevent problems from progressing downstream. Enable faster detection and recovery.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Third Way</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Continuous Learning</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create a culture of experimentation and learning from failure. Allocate time for improvement. Share knowledge across the organization.</p></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<div class="paragraph text-center">
+<p><strong>End of Case Study Package</strong></p>
+</div>
+<div class="paragraph text-center">
+<p><em>This case study contains fictional scenarios for educational purposes.<br>
+All names, organizations, and situations are entirely fictional.</em></p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-19 08:23:50 -0500
+Last updated 2026-01-24 09:36:40 -0500
 </div>
 </div>
 </body>
